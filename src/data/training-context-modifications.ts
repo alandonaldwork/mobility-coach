@@ -1,0 +1,62 @@
+import { ContextModificationRule } from '../types';
+
+export const TRAINING_CONTEXT_RULES: Record<string, ContextModificationRule> = {
+  normal: {
+    id: 'normal',
+    label: 'Normal / No Training',
+    description: 'Standard daily rotation with no modifications.',
+    beforeGuidance: 'Perform full session as scheduled.',
+    afterGuidance: 'Perform full session as scheduled.',
+    restrictedTypes: [],
+  },
+  volleyball_training: {
+    id: 'volleyball_training',
+    label: 'Volleyball Training',
+    description: 'Skills, tactical practice, or team court session.',
+    beforeGuidance: 'Active/dynamic only, trimmed to ~10–12 min before court time. Skip passive stretches.',
+    afterGuidance: 'Full session as programmed post-court; passive holds are fine and can run 5–10 sec longer.',
+    restrictedTypes: ['Passive'],
+    trimmedDurationMinutes: 12,
+  },
+  match_day: {
+    id: 'match_day',
+    label: 'Match Day',
+    description: 'Competitive match or high-intensity tournament day.',
+    beforeGuidance: 'Trimmed active-only circuit (~6–8 min): ankle/hip/shoulder CARs, deep squat rock, 90/90 switches, band pull-aparts.',
+    afterGuidance: 'Full session post-match if time allows; otherwise defer passive work to next recovery day.',
+    restrictedTypes: ['Passive', 'Active/Passive'],
+    trimmedDurationMinutes: 8,
+  },
+  heavy_lower_strength: {
+    id: 'heavy_lower_strength',
+    label: 'Heavy Lower-Body Strength',
+    description: 'Squats, deadlifts, lunges, heavy leg weight room work.',
+    beforeGuidance: 'Active ankle/hip only pre-lift; skip deep passive hip flexor or hamstring stretches.',
+    afterGuidance: 'Full session post-lift; excellent day for Couch Stretch and hamstring flossing.',
+    restrictedTypes: ['Passive'],
+  },
+  heavy_upper_strength: {
+    id: 'heavy_upper_strength',
+    label: 'Heavy Upper-Body Strength',
+    description: 'Pressing, pulling, overhead strength training.',
+    beforeGuidance: 'Activation only (band pull-aparts, scapular wall slides); skip sleeper and cross-body stretches.',
+    afterGuidance: 'Full shoulder session fine post-workout.',
+    restrictedTypes: ['Passive'],
+  },
+  jump_plyos: {
+    id: 'jump_plyos',
+    label: 'Jump / Plyometric Training',
+    description: 'High-volume approach jumps, blocking jumps, depth jumps.',
+    beforeGuidance: 'Active ankle/calf work only (CARs, knee-to-wall, squat rock); SKIP static calf stretching as stiffness contributes to reactive jump power.',
+    afterGuidance: 'Full session post-jumping, including calf stretches.',
+    restrictedTypes: ['Passive'],
+  },
+  recovery_rest: {
+    id: 'recovery_rest',
+    label: 'Recovery / Rest Day',
+    description: 'No heavy training or matches scheduled.',
+    beforeGuidance: 'Full session anytime, optionally extended with foam rolling and longer passive holds.',
+    afterGuidance: 'Best day to run bi-weekly self-assessment tests.',
+    restrictedTypes: [],
+  },
+};
