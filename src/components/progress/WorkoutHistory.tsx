@@ -1,7 +1,7 @@
 import React from 'react';
 import { History, CheckCircle2, Flame, Clock } from 'lucide-react';
 import { useUserStore } from '../../store/useUserStore';
-import { WEEKLY_SCHEDULE } from '../../data/weekly-mobility-schedule';
+import { getWeeklySchedule } from '../../data/schedules';
 
 export const WorkoutHistory: React.FC = () => {
   const completedSessions = useUserStore((state) => state.completedSessions);
@@ -27,7 +27,12 @@ export const WorkoutHistory: React.FC = () => {
 
       <div className="space-y-2">
         {completedSessions.map((session) => {
-          const scheduleSession = WEEKLY_SCHEDULE.find((s) => s.dayId === session.dayId);
+          const sessionDate = new Date(`${session.date}T00:00:00`);
+          const goal = useUserStore.getState().actions.getGoalForMonth(
+            sessionDate.getFullYear(),
+            sessionDate.getMonth(),
+          );
+          const scheduleSession = getWeeklySchedule(goal).find((s) => s.dayId === session.dayId);
           return (
             <div
               key={session.id}

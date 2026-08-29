@@ -1,7 +1,6 @@
 import React from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { useUserStore } from '../../store/useUserStore';
-import { WEEKLY_SCHEDULE } from '../../data/weekly-mobility-schedule';
 
 export const WeeklyRing: React.FC = () => {
   const dailyMinutes = useUserStore((state) => state.dailyMinutes);

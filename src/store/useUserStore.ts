@@ -1,9 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserProgressState, TrainingContext, AssessmentRecord, EquipmentPreferences } from '../types';
+import { UserProgressState, TrainingContext, AssessmentRecord, EquipmentPreferences, ProgramGoal } from '../types';
+import { monthGoalKey } from '../data/schedules';
 
 interface UserStoreActions {
   setTrainingContext: (context: TrainingContext) => void;
+  setMonthlyGoal: (year: number, monthIndex: number, goal: ProgramGoal) => void;
+  getGoalForMonth: (year: number, monthIndex: number) => ProgramGoal;
   recordCompletedSession: (session: {
     dayId: number;
     completedDurationMinutes: number;
@@ -20,6 +23,7 @@ interface UserStoreActions {
 
 export interface UserStore extends UserProgressState {
   equipmentPreferences: EquipmentPreferences;
+  monthlyGoals: Record<string, ProgramGoal>;
   actions: UserStoreActions;
 }
 
@@ -38,6 +42,7 @@ export const useUserStore = create<UserStore>()(
       completedSessions: [],
       assessmentRecords: [],
       trainingContext: 'normal',
+      monthlyGoals: {},
       equipmentPreferences: {
         hasBand: true,
         hasRoller: true,
@@ -46,6 +51,21 @@ export const useUserStore = create<UserStore>()(
       },
       actions: {
         setTrainingContext: (context) => set({ trainingContext: context }),
+
+        setMonthlyGoal: (year, monthIndex, goal) => {
+          const key = monthGoalKey(year, monthIndex);
+          set((state) => ({
+            monthlyGoals: {
+              ...state.monthlyGoals,
+              [key]: goal,
+            },
+          }));
+        },
+
+        getGoalForMonth: (year, monthIndex) => {
+          const key = monthGoalKey(year, monthIndex);
+          return get().monthlyGoals[key] ?? 'combined';
+        },
 
         recordCompletedSession: (session) => {
           const today = getTodayISO();
@@ -178,6 +198,7 @@ export const useUserStore = create<UserStore>()(
         assessmentRecords: state.assessmentRecords,
         trainingContext: state.trainingContext,
         equipmentPreferences: state.equipmentPreferences,
+        monthlyGoals: state.monthlyGoals,
       }),
     }
   )

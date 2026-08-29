@@ -1,8 +1,9 @@
 import { create } from 'zustand';
-import { DailySession, SessionExercise, TrainingContext } from '../types';
-import { WEEKLY_SCHEDULE } from '../data/weekly-mobility-schedule';
-import { EXERCISE_LIBRARY } from '../data/exercise-library';
+import { DailySession, ProgramGoal, SessionExercise, TrainingContext } from '../types';
+import { getWeeklySchedule } from '../data/schedules';
+import { getExerciseById } from '../data/exercise-catalog';
 import { TRAINING_CONTEXT_RULES } from '../data/training-context-modifications';
+import { useUserStore } from './useUserStore';
 
 export type PlayerState = 'idle' | 'briefing' | 'exercise' | 'transition' | 'complete' | 'bonus';
 
@@ -18,7 +19,7 @@ export interface WorkoutSessionStore {
   transitionCountdown: number; // 3, 2, 1
 
   // Actions
-  startWorkout: (dayId: number, context: TrainingContext) => void;
+  startWorkout: (dayId: number, context: TrainingContext, goal?: ProgramGoal) => void;
   startDeskResetStandalone: () => void;
   startMEDStandalone: () => void;
   pauseTimer: () => void;
@@ -44,15 +45,19 @@ export const useWorkoutStore = create<WorkoutSessionStore>((set, get) => ({
   completedExerciseIds: [],
   transitionCountdown: 3,
 
-  startWorkout: (dayId, context) => {
-    const rawSession = WEEKLY_SCHEDULE.find((s) => s.dayId === dayId) || WEEKLY_SCHEDULE[0];
+  startWorkout: (dayId, context, goal) => {
+    const now = new Date();
+    const resolvedGoal =
+      goal ?? useUserStore.getState().actions.getGoalForMonth(now.getFullYear(), now.getMonth());
+    const schedule = getWeeklySchedule(resolvedGoal);
+    const rawSession = schedule.find((s) => s.dayId === dayId) || schedule[0];
     const rule = TRAINING_CONTEXT_RULES[context] || TRAINING_CONTEXT_RULES.normal;
 
     // Filter restricted exercise types based on context if pre-activity
     let exercises = rawSession.exercises;
     if (rule.restrictedTypes && rule.restrictedTypes.length > 0) {
       exercises = exercises.filter((se) => {
-        const full = EXERCISE_LIBRARY.find((e) => e.id === se.exerciseId);
+        const full = getExerciseById(se.exerciseId);
         if (!full) return true;
         return !rule.restrictedTypes.includes(full.type);
       });
@@ -85,13 +90,13 @@ export const useWorkoutStore = create<WorkoutSessionStore>((set, get) => ({
       deskResetMinutes: 5,
       mainSessionMinutes: 0,
       exercises: [
-        { exerciseId: 1, startTime: '00:00', durationSeconds: 30, dose: '8 circles/dir/side', type: 'Active' },
-        { exerciseId: 8, startTime: '00:30', durationSeconds: 45, dose: '20 sec/side', type: 'Passive' },
-        { exerciseId: 11, startTime: '01:15', durationSeconds: 30, dose: '20 sec/side', type: 'Passive' },
-        { exerciseId: 21, startTime: '01:45', durationSeconds: 30, dose: '20 sec/side', type: 'Passive' },
-        { exerciseId: 13, startTime: '02:15', durationSeconds: 40, dose: '8 slow reps', type: 'Active' },
-        { exerciseId: 24, startTime: '02:55', durationSeconds: 30, dose: '10 reps, 2 sec hold', type: 'Activation' },
-        { exerciseId: 10, startTime: '03:25', durationSeconds: 90, dose: '10 squats + march in place', type: 'Active' },
+        { exerciseId: 21, startTime: '00:00', durationSeconds: 30, dose: '8 circles/dir/side', type: 'Active' },
+        { exerciseId: 3, startTime: '00:30', durationSeconds: 45, dose: '20 sec/side', type: 'Static' },
+        { exerciseId: 5, startTime: '01:15', durationSeconds: 30, dose: '20 sec/side', type: 'Static' },
+        { exerciseId: 14, startTime: '01:45', durationSeconds: 30, dose: '20 sec/side', type: 'Static' },
+        { exerciseId: 28, startTime: '02:15', durationSeconds: 40, dose: '8 slow reps', type: 'Active' },
+        { exerciseId: 36, startTime: '02:55', durationSeconds: 30, dose: '10 reps, 2 sec hold', type: 'Activation' },
+        { exerciseId: 26, startTime: '03:25', durationSeconds: 90, dose: '10 squats + march in place', type: 'Active' },
       ],
     };
 
@@ -118,14 +123,14 @@ export const useWorkoutStore = create<WorkoutSessionStore>((set, get) => ({
       deskResetMinutes: 0,
       mainSessionMinutes: 8,
       exercises: [
-        { exerciseId: 1, startTime: '00:00', durationSeconds: 60, dose: '1 min combined ankle CARs + dorsiflexion', type: 'Active' },
-        { exerciseId: 10, startTime: '01:00', durationSeconds: 60, dose: '1 min active squat rock', type: 'Active' },
-        { exerciseId: 6, startTime: '02:00', durationSeconds: 60, dose: '1 min smooth switches', type: 'Active' },
-        { exerciseId: 7, startTime: '03:00', durationSeconds: 90, dose: '1.5 min dynamic flow (3-4 reps/side)', type: 'Dynamic' },
-        { exerciseId: 13, startTime: '04:30', durationSeconds: 60, dose: '1 min open book (5 reps/side)', type: 'Active' },
-        { exerciseId: 17, startTime: '05:30', durationSeconds: 90, dose: '1.5 min slides + pull-aparts', type: 'Activation' },
-        { exerciseId: 24, startTime: '07:00', durationSeconds: 60, dose: '1 min chin tucks + neck rotation', type: 'Activation' },
-        { exerciseId: 29, startTime: '08:00', durationSeconds: 30, dose: '30 sec wrist circles', type: 'Active' },
+        { exerciseId: 21, startTime: '00:00', durationSeconds: 60, dose: '1 min combined ankle CARs + dorsiflexion', type: 'Active' },
+        { exerciseId: 26, startTime: '01:00', durationSeconds: 60, dose: '1 min active squat rock', type: 'Active' },
+        { exerciseId: 23, startTime: '02:00', durationSeconds: 60, dose: '1 min smooth switches', type: 'Active' },
+        { exerciseId: 24, startTime: '03:00', durationSeconds: 90, dose: '1.5 min dynamic flow (3-4 reps/side)', type: 'Dynamic' },
+        { exerciseId: 28, startTime: '04:30', durationSeconds: 60, dose: '1 min open book (5 reps/side)', type: 'Active' },
+        { exerciseId: 31, startTime: '05:30', durationSeconds: 90, dose: '1.5 min slides + pull-aparts', type: 'Activation' },
+        { exerciseId: 36, startTime: '07:00', durationSeconds: 60, dose: '1 min chin tucks + neck rotation', type: 'Activation' },
+        { exerciseId: 38, startTime: '08:00', durationSeconds: 30, dose: '30 sec wrist circles', type: 'Active' },
       ],
     };
 

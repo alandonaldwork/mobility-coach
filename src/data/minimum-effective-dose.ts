@@ -11,7 +11,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 1,
     name: 'Ankle CARs + Knee-to-Wall Dorsiflexion',
-    exerciseIds: [1, 2],
+    exerciseIds: [21, 22],
     dose: '1 min combined flow',
     durationSeconds: 60,
     targetRegion: 'Ankles',
@@ -19,7 +19,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 2,
     name: 'Deep Squat Rock',
-    exerciseIds: [10],
+    exerciseIds: [26],
     dose: '1 min active rock',
     durationSeconds: 60,
     targetRegion: 'Hips & Ankles',
@@ -27,7 +27,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 3,
     name: '90/90 Hip Switches',
-    exerciseIds: [6],
+    exerciseIds: [23],
     dose: '1 min smooth switches',
     durationSeconds: 60,
     targetRegion: 'Hip Rotation',
@@ -35,7 +35,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 4,
     name: "World's Greatest Stretch",
-    exerciseIds: [7],
+    exerciseIds: [24],
     dose: '1.5 min dynamic flow (3-4 reps/side)',
     durationSeconds: 90,
     targetRegion: 'Hip, Hamstring & T-Spine',
@@ -43,7 +43,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 5,
     name: 'Open Book Rotation',
-    exerciseIds: [13],
+    exerciseIds: [28],
     dose: '1 min (5 reps/side)',
     durationSeconds: 60,
     targetRegion: 'Thoracic Spine',
@@ -51,7 +51,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 6,
     name: 'Scapular Wall Slides + Band Pull-Apart',
-    exerciseIds: [17, 18],
+    exerciseIds: [31, 32],
     dose: '1.5 min combined activation',
     durationSeconds: 90,
     targetRegion: 'Shoulders & Upper Back',
@@ -59,7 +59,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 7,
     name: 'Chin Tucks + Neck Rotation',
-    exerciseIds: [24, 27],
+    exerciseIds: [36, 37],
     dose: '1 min neck reset',
     durationSeconds: 60,
     targetRegion: 'Neck',
@@ -67,7 +67,7 @@ export const MINIMUM_EFFECTIVE_DOSE: MEDItem[] = [
   {
     id: 8,
     name: 'Wrist Circles',
-    exerciseIds: [29],
+    exerciseIds: [38],
     dose: '30 sec active circles',
     durationSeconds: 30,
     targetRegion: 'Wrists',

@@ -1,5 +1,9 @@
 export type BodyRegion = 'ankle' | 'hip' | 'thoracic' | 'shoulder' | 'neck' | 'wrist' | 'full-body';
 
+export type LibraryTag = 'stretch' | 'mobility';
+
+export type ProgramGoal = 'combined' | 'stretch' | 'mobility';
+
 export type ExerciseType = 
   | 'Active' 
   | 'Dynamic' 
@@ -30,6 +34,7 @@ export interface Exercise {
   equipment: string[];
   safetyNotes?: string;
   passiveRestriction?: string;
+  libraryTag?: LibraryTag;
 }
 
 export interface SessionExercise {
