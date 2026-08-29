@@ -168,7 +168,7 @@ export const useUserStore = create<UserStore>()(
       },
     }),
     {
-      name: 'elite-volleyball-user-store',
+      name: 'elite-sport-user-store',
       partialize: (state) => ({
         currentStreak: state.currentStreak,
         longestStreak: state.longestStreak,

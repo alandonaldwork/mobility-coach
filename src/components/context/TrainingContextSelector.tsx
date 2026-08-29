@@ -10,7 +10,7 @@ export const TrainingContextSelector: React.FC = () => {
 
   const contexts: Array<{ id: TrainingContext; label: string; icon: React.FC<{ className?: string }> }> = [
     { id: 'normal', label: 'Normal / Rest', icon: Shield },
-    { id: 'volleyball_training', label: 'Volleyball Practice', icon: Activity },
+    { id: 'sport_training', label: 'Sport Practice', icon: Activity },
     { id: 'match_day', label: 'Match Day', icon: Zap },
     { id: 'heavy_lower_strength', label: 'Lower Strength', icon: Dumbbell },
     { id: 'heavy_upper_strength', label: 'Upper Strength', icon: Dumbbell },

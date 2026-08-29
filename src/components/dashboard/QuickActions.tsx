@@ -63,7 +63,7 @@ export const QuickActions: React.FC = () => {
               Minimum Effective Dose
             </h4>
             <p className="text-xs text-content-muted leading-relaxed">
-              For jammed days. 8 active movements covering all 7 volleyball joint regions.
+              For jammed days. 8 active movements covering all 7 sport joint regions.
             </p>
           </div>
           <ChevronRight className="w-5 h-5 text-content-muted group-hover:text-ember transition-colors flex-shrink-0 mt-2" />

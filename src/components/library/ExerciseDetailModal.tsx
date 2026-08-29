@@ -55,7 +55,7 @@ export const ExerciseDetailModal: React.FC<ExerciseDetailModalProps> = ({ exerci
 
           <div className="bg-surface-elevated border border-surface-border rounded-xl p-3.5 space-y-1">
             <span className="text-xs font-mono font-bold text-volt uppercase flex items-center space-x-1">
-              <ShieldCheck className="w-4 h-4 mr-1" /> Why It Matters for Volleyball
+              <ShieldCheck className="w-4 h-4 mr-1" /> Why It Matters for sport
             </span>
             <p className="text-xs text-content-secondary leading-relaxed">{exercise.whyItMatters}</p>
           </div>

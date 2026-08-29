@@ -28,6 +28,6 @@ export const SAFETY_GUIDANCE: SafetyGuideline[] = [
   {
     title: 'Educational Guidance Disclaimer',
     category: 'disclaimer',
-    description: 'This application provides general athletic educational guidance based on the Elite Volleyball Daily Mobility & Stretching Program. It is not medical advice or a substitute for individualized physical therapy assessment.',
+    description: 'This application provides general athletic educational guidance based on the Elite sport Daily Mobility & Stretching Program. It is not medical advice or a substitute for individualized physical therapy assessment.',
   },
 ];

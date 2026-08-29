@@ -47,7 +47,7 @@ export const MonthlyCalendar: React.FC = () => {
             <h2 className="text-lg font-extrabold text-content-primary font-mono tracking-tight">
               {getMonthName(monthIndex)} {year}
             </h2>
-            <p className="text-xs text-content-muted">Continuous 7-Day Volleyball Mobility Rotation</p>
+            <p className="text-xs text-content-muted">Continuous 7-Day sport Mobility Rotation</p>
           </div>
         </div>
 

@@ -45,7 +45,7 @@ export const ExerciseLibrary: React.FC = () => {
           <Search className="w-4 h-4 text-content-muted absolute left-3.5 top-3" />
           <input
             type="text"
-            placeholder="Search exercises, targets, or volleyball benefits..."
+            placeholder="Search exercises, targets, or sport benefits..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-surface-elevated border border-surface-border rounded-xl pl-10 pr-4 py-2.5 text-xs text-content-primary placeholder-content-muted focus:outline-none focus:border-volt transition-colors"

@@ -7,8 +7,10 @@ export type ExerciseType =
   | 'Passive' 
   | 'Active/Passive' 
   | 'SMR' 
-  | 'Breathing';
-
+  | 'Breathing'
+  | 'Static'
+  | 'PNF';
+ 
 export interface Exercise {
   id: number;
   name: string;
@@ -51,7 +53,7 @@ export interface DailySession {
 }
 
 export type TrainingContext = 
-  | 'volleyball_training'
+  | 'sport_training'
   | 'match_day'
   | 'heavy_lower_strength'
   | 'heavy_upper_strength'
