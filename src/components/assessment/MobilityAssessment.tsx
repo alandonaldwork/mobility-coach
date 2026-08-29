@@ -53,7 +53,7 @@ export const MobilityAssessment: React.FC = () => {
       <div className="bg-surface-elevated/70 border border-surface-border rounded-xl p-3.5 text-xs text-content-secondary flex items-start space-x-2.5">
         <Info className="w-4 h-4 text-volt flex-shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          Run these tests every 1–2 weeks on a recovery day. Side-to-side symmetry is often the most meaningful marker for volleyball injury risk.
+          Run these tests every 1–2 weeks on a recovery day. Side-to-side symmetry is often the most meaningful marker for sport injury risk.
         </p>
       </div>
 

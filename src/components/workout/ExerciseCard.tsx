@@ -29,7 +29,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, dose }) =>
         </p>
       </div>
 
-      {/* Target & Volleyball Benefit */}
+      {/* Target & sport Benefit */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
         <div className="bg-surface-elevated border border-surface-border rounded-xl p-3 space-y-1">
           <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1">
@@ -44,7 +44,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, dose }) =>
         <div className="bg-surface-elevated border border-surface-border rounded-xl p-3 space-y-1">
           <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1">
             <ShieldCheck className="w-3.5 h-3.5 text-volt" />
-            <span>Why It Matters for Volleyball</span>
+            <span>Why It Matters for sport</span>
           </span>
           <p className="text-xs font-semibold text-content-primary leading-snug">
             {exercise.whyItMatters}

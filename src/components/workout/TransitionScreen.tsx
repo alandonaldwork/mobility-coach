@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useWorkoutStore } from '../../store/useWorkoutStore';
-import { EXERCISE_LIBRARY } from '../../data/exercise-library';
+import { getExerciseById } from '../../data/exercise-catalog';
 
 export const TransitionScreen: React.FC = () => {
   const { transitionCountdown, tickTimer, currentExerciseIndex, filteredExercises, nextExercise } = useWorkoutStore();
 
   const nextExSession = filteredExercises[currentExerciseIndex + 1];
-  const nextExDetails = nextExSession ? EXERCISE_LIBRARY.find((e) => e.id === nextExSession.exerciseId) : null;
+  const nextExDetails = nextExSession ? getExerciseById(nextExSession.exerciseId) : null;
 
   useEffect(() => {
     const timer = setInterval(() => {

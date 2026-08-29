@@ -9,9 +9,9 @@ export const TRAINING_CONTEXT_RULES: Record<string, ContextModificationRule> = {
     afterGuidance: 'Perform full session as scheduled.',
     restrictedTypes: [],
   },
-  volleyball_training: {
-    id: 'volleyball_training',
-    label: 'Volleyball Training',
+  sport_training: {
+    id: 'sport_training',
+    label: 'Sport Training',
     description: 'Skills, tactical practice, or team court session.',
     beforeGuidance: 'Active/dynamic only, trimmed to ~10–12 min before court time. Skip passive stretches.',
     afterGuidance: 'Full session as programmed post-court; passive holds are fine and can run 5–10 sec longer.',

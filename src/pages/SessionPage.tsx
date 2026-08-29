@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWorkoutStore } from '../store/useWorkoutStore';
-import { EXERCISE_LIBRARY } from '../data/exercise-library';
+import { getExerciseById } from '../data/exercise-catalog';
 import { SessionProgress } from '../components/workout/SessionProgress';
 import { ExerciseTimer } from '../components/workout/ExerciseTimer';
 import { ExerciseCard } from '../components/workout/ExerciseCard';
@@ -21,8 +21,16 @@ export const SessionPage: React.FC = () => {
   // Auto-start today's session if navigated to /session directly in idle state
   useEffect(() => {
     if (playerState === 'idle' && !activeSession) {
-      const todaySession = getSessionForDate(new Date());
-      startWorkout(todaySession.dayId, trainingContext);
+      const today = new Date();
+      const todaySession = getSessionForDate(
+        today,
+        useUserStore.getState().actions.getGoalForMonth(today.getFullYear(), today.getMonth()),
+      );
+      startWorkout(
+        todaySession.dayId,
+        trainingContext,
+        useUserStore.getState().actions.getGoalForMonth(today.getFullYear(), today.getMonth()),
+      );
     }
   }, [playerState, activeSession, startWorkout, trainingContext]);
 
@@ -81,7 +89,7 @@ export const SessionPage: React.FC = () => {
   }
 
   const currentExSession = filteredExercises[currentExerciseIndex];
-  const currentExDetails = currentExSession ? EXERCISE_LIBRARY.find((e) => e.id === currentExSession.exerciseId) : null;
+  const currentExDetails = currentExSession ? getExerciseById(currentExSession.exerciseId) : null;
 
   if (!currentExDetails || !currentExSession) {
     return null;

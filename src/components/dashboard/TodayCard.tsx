@@ -8,7 +8,10 @@ import { useWorkoutStore } from '../../store/useWorkoutStore';
 export const TodayCard: React.FC = () => {
   const navigate = useNavigate();
   const today = new Date();
-  const session = getSessionForDate(today);
+  const monthlyGoals = useUserStore((state) => state.monthlyGoals);
+  const getGoalForMonth = useUserStore((state) => state.actions.getGoalForMonth);
+  const monthGoal = getGoalForMonth(today.getFullYear(), today.getMonth());
+  const session = getSessionForDate(today, monthGoal);
   const trainingContext = useUserStore((state) => state.trainingContext);
   const startWorkout = useWorkoutStore((state) => state.startWorkout);
 
@@ -19,7 +22,7 @@ export const TodayCard: React.FC = () => {
   });
 
   const handleStartSession = () => {
-    startWorkout(session.dayId, trainingContext);
+    startWorkout(session.dayId, trainingContext, monthGoal);
     navigate('/session');
   };
 

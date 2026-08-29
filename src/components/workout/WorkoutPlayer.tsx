@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWorkoutStore } from '../../store/useWorkoutStore';
-import { EXERCISE_LIBRARY } from '../../data/exercise-library';
+import { getExerciseById } from '../../data/exercise-catalog';
 import { SessionProgress } from './SessionProgress';
 import { ExerciseTimer } from './ExerciseTimer';
 import { ExerciseCard } from './ExerciseCard';
@@ -42,7 +42,7 @@ export const WorkoutPlayer: React.FC = () => {
   }
 
   const currentExSession = filteredExercises[currentExerciseIndex];
-  const currentExDetails = currentExSession ? EXERCISE_LIBRARY.find((e) => e.id === currentExSession.exerciseId) : null;
+  const currentExDetails = currentExSession ? getExerciseById(currentExSession.exerciseId) : null;
 
   if (!currentExDetails || !currentExSession) {
     return null;

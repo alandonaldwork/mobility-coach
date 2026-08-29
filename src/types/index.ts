@@ -1,5 +1,9 @@
 export type BodyRegion = 'ankle' | 'hip' | 'thoracic' | 'shoulder' | 'neck' | 'wrist' | 'full-body';
 
+export type LibraryTag = 'stretch' | 'mobility';
+
+export type ProgramGoal = 'combined' | 'stretch' | 'mobility';
+
 export type ExerciseType = 
   | 'Active' 
   | 'Dynamic' 
@@ -7,8 +11,10 @@ export type ExerciseType =
   | 'Passive' 
   | 'Active/Passive' 
   | 'SMR' 
-  | 'Breathing';
-
+  | 'Breathing'
+  | 'Static'
+  | 'PNF';
+ 
 export interface Exercise {
   id: number;
   name: string;
@@ -28,6 +34,7 @@ export interface Exercise {
   equipment: string[];
   safetyNotes?: string;
   passiveRestriction?: string;
+  libraryTag?: LibraryTag;
 }
 
 export interface SessionExercise {
@@ -51,7 +58,7 @@ export interface DailySession {
 }
 
 export type TrainingContext = 
-  | 'volleyball_training'
+  | 'sport_training'
   | 'match_day'
   | 'heavy_lower_strength'
   | 'heavy_upper_strength'

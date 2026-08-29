@@ -1,5 +1,5 @@
-import { WEEKLY_SCHEDULE } from '../data/weekly-mobility-schedule';
-import { DailySession } from '../types';
+import { DailySession, ProgramGoal } from '../types';
+import { getWeeklySchedule } from '../data/schedules';
 
 export interface CalendarDayInfo {
   date: Date;
@@ -11,6 +11,11 @@ export interface CalendarDayInfo {
   isToday: boolean;
   isFuture: boolean;
 }
+
+const sessionForDay = (dayId: 1 | 2 | 3 | 4 | 5 | 6 | 7, goal: ProgramGoal): DailySession => {
+  const schedule = getWeeklySchedule(goal);
+  return schedule.find((s) => s.dayId === dayId) || schedule[0];
+};
 
 /**
  * Calculates continuous 7-day program rotation day for any date.
@@ -28,12 +33,16 @@ export const getProgramDayForDate = (date: Date): 1 | 2 | 3 | 4 | 5 | 6 | 7 => {
   return dayId;
 };
 
-export const getSessionForDate = (date: Date): DailySession => {
+export const getSessionForDate = (date: Date, goal: ProgramGoal = 'combined'): DailySession => {
   const dayId = getProgramDayForDate(date);
-  return WEEKLY_SCHEDULE.find((s) => s.dayId === dayId) || WEEKLY_SCHEDULE[0];
+  return sessionForDay(dayId, goal);
 };
 
-export const generateMonthCalendarDays = (year: number, monthIndex: number): CalendarDayInfo[] => {
+export const generateMonthCalendarDays = (
+  year: number,
+  monthIndex: number,
+  goal: ProgramGoal = 'combined',
+): CalendarDayInfo[] => {
   const today = new Date();
   const todayISO = today.toISOString().split('T')[0];
 
@@ -42,10 +51,7 @@ export const generateMonthCalendarDays = (year: number, monthIndex: number): Cal
 
   const days: CalendarDayInfo[] = [];
 
-  // Padding days from previous month
-  const prevMonthLastDay = new Date(year, monthIndex, 0).getDate();
-  for (let i = firstDayOfWeek - 1; i >= 0; i--) {
-    const d = new Date(year, monthIndex - 1, prevMonthLastDay - i);
+  const pushDay = (d: Date, isCurrentMonth: boolean) => {
     const dateString = d.toISOString().split('T')[0];
     const programDayId = getProgramDayForDate(d);
     days.push({
@@ -53,46 +59,25 @@ export const generateMonthCalendarDays = (year: number, monthIndex: number): Cal
       dateString,
       dayOfMonth: d.getDate(),
       programDayId,
-      session: WEEKLY_SCHEDULE.find((s) => s.dayId === programDayId)!,
-      isCurrentMonth: false,
-      isToday: dateString === todayISO,
-      isFuture: d > today,
-    });
-  }
-
-  // Days of current month
-  for (let day = 1; day <= daysInMonth; day++) {
-    const d = new Date(year, monthIndex, day);
-    const dateString = d.toISOString().split('T')[0];
-    const programDayId = getProgramDayForDate(d);
-    days.push({
-      date: d,
-      dateString,
-      dayOfMonth: day,
-      programDayId,
-      session: WEEKLY_SCHEDULE.find((s) => s.dayId === programDayId)!,
-      isCurrentMonth: true,
+      session: sessionForDay(programDayId, goal),
+      isCurrentMonth,
       isToday: dateString === todayISO,
       isFuture: d > today && dateString !== todayISO,
     });
+  };
+
+  const prevMonthLastDay = new Date(year, monthIndex, 0).getDate();
+  for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+    pushDay(new Date(year, monthIndex - 1, prevMonthLastDay - i), false);
   }
 
-  // Padding days for next month to complete grid (42 cells = 6 weeks)
+  for (let day = 1; day <= daysInMonth; day++) {
+    pushDay(new Date(year, monthIndex, day), true);
+  }
+
   const remaining = 42 - days.length;
   for (let i = 1; i <= remaining; i++) {
-    const d = new Date(year, monthIndex + 1, i);
-    const dateString = d.toISOString().split('T')[0];
-    const programDayId = getProgramDayForDate(d);
-    days.push({
-      date: d,
-      dateString,
-      dayOfMonth: d.getDate(),
-      programDayId,
-      session: WEEKLY_SCHEDULE.find((s) => s.dayId === programDayId)!,
-      isCurrentMonth: false,
-      isToday: dateString === todayISO,
-      isFuture: d > today,
-    });
+    pushDay(new Date(year, monthIndex + 1, i), false);
   }
 
   return days;

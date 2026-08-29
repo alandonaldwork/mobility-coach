@@ -1,10 +1,19 @@
 import React from 'react';
 import { Settings, Dumbbell, Trash2, CheckCircle2 } from 'lucide-react';
 import { useUserStore } from '../store/useUserStore';
+import { ProgramGoal } from '../types';
+
+const goalOptions: { id: ProgramGoal; label: string; description: string }[] = [
+  { id: 'combined', label: 'Combined', description: 'A balanced mix of stretches and active mobility.' },
+  { id: 'stretch', label: 'Stretches', description: 'Hold-based flexibility and recovery sessions.' },
+  { id: 'mobility', label: 'Mobility', description: 'Active range, control, and movement sessions.' },
+];
 
 export const SettingsPage: React.FC = () => {
   const { equipmentPreferences, actions } = useUserStore();
   const [showResetConfirm, setShowResetConfirm] = React.useState(false);
+  const today = new Date();
+  const currentGoal = actions.getGoalForMonth(today.getFullYear(), today.getMonth());
 
   const toggleEquipment = (key: keyof typeof equipmentPreferences) => {
     actions.updateEquipmentPreferences({ [key]: !equipmentPreferences[key] });
@@ -23,6 +32,31 @@ export const SettingsPage: React.FC = () => {
             </h2>
             <p className="text-xs text-content-muted font-sans">Configure available gear & manage local storage</p>
           </div>
+        </div>
+      </div>
+
+      <div className="bg-surface-card border border-surface-border rounded-2xl p-5 space-y-3 shadow-elevated">
+        <div>
+          <h3 className="text-xs font-mono font-bold text-volt uppercase">This Month's Program</h3>
+          <p className="text-xs text-content-muted mt-1">
+            Choose the rotation used for {today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {goalOptions.map((option) => (
+            <button
+              key={option.id}
+              onClick={() => actions.setMonthlyGoal(today.getFullYear(), today.getMonth(), option.id)}
+              className={`text-left p-3 rounded-xl border transition-all ${
+                currentGoal === option.id
+                  ? 'bg-volt/10 border-volt/50 text-content-primary'
+                  : 'bg-surface-elevated border-surface-border text-content-secondary hover:border-volt/30'
+              }`}
+            >
+              <span className="text-xs font-bold block">{option.label}</span>
+              <span className="text-[11px] text-content-muted leading-relaxed block mt-0.5">{option.description}</span>
+            </button>
+          ))}
         </div>
       </div>
 

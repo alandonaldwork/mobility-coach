@@ -2,9 +2,8 @@ import React from 'react';
 import { Play, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { DailySession } from '../../types';
-import { EXERCISE_LIBRARY } from '../../data/exercise-library';
+import { getExerciseById } from '../../data/exercise-catalog';
 import { useWorkoutStore } from '../../store/useWorkoutStore';
-import { useUserStore } from '../../store/useUserStore';
 import { TrainingContextSelector } from '../context/TrainingContextSelector';
 import { SafetyNotice } from '../shared/SafetyNotice';
 
@@ -15,13 +14,10 @@ interface DailyWorkoutProps {
 
 export const DailyWorkout: React.FC<DailyWorkoutProps> = ({ session, onBack }) => {
   const navigate = useNavigate();
-  const startWorkout = useWorkoutStore((state) => state.startWorkout);
-  const trainingContext = useUserStore((state) => state.trainingContext);
   const setPlayerState = useWorkoutStore.setState;
 
   const handleStartSession = () => {
-    startWorkout(session.dayId, trainingContext);
-    setPlayerState({ playerState: 'exercise' })
+    setPlayerState({ playerState: 'exercise' });
     navigate('/session');
   };
 
@@ -78,7 +74,7 @@ export const DailyWorkout: React.FC<DailyWorkoutProps> = ({ session, onBack }) =
 
         <div className="space-y-2">
           {session.exercises.map((se, idx) => {
-            const exDetails = EXERCISE_LIBRARY.find((e) => e.id === se.exerciseId);
+            const exDetails = getExerciseById(se.exerciseId);
             if (!exDetails) return null;
 
             return (
