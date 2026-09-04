@@ -11,25 +11,25 @@ interface ExerciseDetailModalProps {
 
 export const ExerciseDetailModal: React.FC<ExerciseDetailModalProps> = ({ exercise, onClose }) => {
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-      <div className="bg-surface-card border border-surface-border rounded-3xl max-w-lg w-full p-6 space-y-5 shadow-elevated relative my-8 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-start justify-between border-b border-surface-border pb-4">
-          <div className="space-y-1">
-            <div className="flex items-center space-x-2">
-              <span className="text-[10px] font-mono font-bold text-volt uppercase bg-volt/10 border border-volt/30 px-2.5 py-0.5 rounded-full">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fade-in">
+      <div className="bg-surface-card border border-surface-border rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-elevated relative my-4 sm:my-8 max-h-[88vh] overflow-y-auto">
+        <div className="flex items-start justify-between border-b border-surface-border pb-3 sm:pb-4 gap-2">
+          <div className="space-y-1 min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] font-mono font-bold text-volt uppercase bg-volt/10 border border-volt/30 px-2.5 py-0.5 rounded-full shrink-0">
                 {exercise.region.toUpperCase()}
               </span>
-              <span className="text-[10px] font-mono font-bold text-content-muted uppercase border border-surface-border px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-mono font-bold text-content-muted uppercase border border-surface-border px-2.5 py-0.5 rounded-full shrink-0">
                 {exercise.type}
               </span>
             </div>
-            <h2 className="text-xl font-extrabold text-content-primary leading-tight">
+            <h2 className="text-lg sm:text-xl font-extrabold text-content-primary leading-tight">
               {exercise.name}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg hover:bg-surface-elevated text-content-muted hover:text-content-primary transition-colors"
+            className="p-1 rounded-lg hover:bg-surface-elevated text-content-muted hover:text-content-primary transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>

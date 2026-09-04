@@ -10,7 +10,8 @@ import {
   Settings, 
   Flame, 
   ChevronLeft, 
-  ChevronRight 
+  ChevronRight,
+  ClipboardCheck
 } from 'lucide-react';
 import { useUserStore } from '../../store/useUserStore';
 
@@ -26,6 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
     { to: '/', label: 'Home', icon: Home },
     { to: '/calendar', label: 'Calendar', icon: Calendar },
     { to: '/library', label: 'Library', icon: BookOpen },
+    { to: '/assessments', label: 'Assessments', icon: ClipboardCheck },
     { to: '/progress', label: 'Stats', icon: BarChart3 },
     { to: '/progression', label: 'Plan', icon: Zap },
     { to: '/settings', label: 'Settings', icon: Settings },

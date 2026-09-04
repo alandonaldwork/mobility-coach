@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { DailySession, ProgramGoal, SessionExercise, TrainingContext } from '../types';
 import { getWeeklySchedule } from '../data/schedules';
 import { getExerciseById } from '../data/exercise-catalog';
-import { TRAINING_CONTEXT_RULES } from '../data/training-context-modifications';
+import { modifySessionForContext } from '../utils/contextUtils';
 import { useUserStore } from './useUserStore';
 
 export type PlayerState = 'idle' | 'briefing' | 'exercise' | 'transition' | 'complete' | 'bonus';
@@ -51,24 +51,16 @@ export const useWorkoutStore = create<WorkoutSessionStore>((set, get) => ({
       goal ?? useUserStore.getState().actions.getGoalForMonth(now.getFullYear(), now.getMonth());
     const schedule = getWeeklySchedule(resolvedGoal);
     const rawSession = schedule.find((s) => s.dayId === dayId) || schedule[0];
-    const rule = TRAINING_CONTEXT_RULES[context] || TRAINING_CONTEXT_RULES.normal;
 
-    // Filter restricted exercise types based on context if pre-activity
-    let exercises = rawSession.exercises;
-    if (rule.restrictedTypes && rule.restrictedTypes.length > 0) {
-      exercises = exercises.filter((se) => {
-        const full = getExerciseById(se.exerciseId);
-        if (!full) return true;
-        return !rule.restrictedTypes.includes(full.type);
-      });
-    }
+    const { modifiedSession } = modifySessionForContext(rawSession, context);
+    const exercises = modifiedSession.exercises;
 
     const firstExercise = exercises[0];
     const initialDuration = firstExercise ? firstExercise.durationSeconds : 30;
 
     set({
       playerState: 'briefing',
-      activeSession: rawSession,
+      activeSession: modifiedSession,
       filteredExercises: exercises,
       currentExerciseIndex: 0,
       isPaused: false,

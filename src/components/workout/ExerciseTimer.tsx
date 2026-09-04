@@ -81,55 +81,55 @@ export const ExerciseTimer: React.FC<ExerciseTimerProps> = ({ exercise, dose }) 
       </div>
 
       {/* Timer Controls */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center justify-center space-x-2 sm:space-x-3 max-w-full">
         <button
           onClick={previousExercise}
-          className="w-12 h-12 rounded-2xl bg-surface-elevated border border-surface-border hover:border-surface-highlight text-content-primary flex items-center justify-center transition-all"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-elevated border border-surface-border hover:border-surface-highlight text-content-primary flex items-center justify-center transition-all shrink-0"
           title="Previous Exercise"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         <button
           onClick={restartCurrentExercise}
-          className="w-12 h-12 rounded-2xl bg-surface-elevated border border-surface-border hover:border-surface-highlight text-content-primary flex items-center justify-center transition-all"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-elevated border border-surface-border hover:border-surface-highlight text-content-primary flex items-center justify-center transition-all shrink-0"
           title="Restart Exercise"
         >
-          <RotateCcw className="w-5 h-5" />
+          <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
         {isPaused ? (
           <button
             onClick={resumeTimer}
-            className="w-16 h-16 rounded-2xl bg-volt text-surface-base hover:bg-volt/90 font-extrabold flex items-center justify-center shadow-volt transition-all scale-105"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-volt text-surface-base hover:bg-volt/90 font-extrabold flex items-center justify-center shadow-volt transition-all shrink-0"
             title="Resume"
           >
-            <Play className="w-8 h-8 fill-surface-base ml-1" />
+            <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-surface-base ml-0.5" />
           </button>
         ) : (
           <button
             onClick={pauseTimer}
-            className="w-16 h-16 rounded-2xl bg-volt text-surface-base hover:bg-volt/90 font-extrabold flex items-center justify-center shadow-volt transition-all scale-105"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-volt text-surface-base hover:bg-volt/90 font-extrabold flex items-center justify-center shadow-volt transition-all shrink-0"
             title="Pause"
           >
-            <Pause className="w-8 h-8 fill-surface-base" />
+            <Pause className="w-7 h-7 sm:w-8 sm:h-8 fill-surface-base" />
           </button>
         )}
 
         <button
           onClick={markCurrentExerciseComplete}
-          className="w-12 h-12 rounded-2xl bg-surface-elevated border border-surface-border hover:border-state-success text-state-success flex items-center justify-center transition-all"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-elevated border border-surface-border hover:border-state-success text-state-success flex items-center justify-center transition-all shrink-0"
           title="Mark Complete"
         >
-          <CheckCircle2 className="w-6 h-6" />
+          <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         <button
           onClick={nextExercise}
-          className="w-12 h-12 rounded-2xl bg-surface-elevated border border-surface-border hover:border-surface-highlight text-content-primary flex items-center justify-center transition-all"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-elevated border border-surface-border hover:border-surface-highlight text-content-primary flex items-center justify-center transition-all shrink-0"
           title="Next Exercise"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>
     </div>
