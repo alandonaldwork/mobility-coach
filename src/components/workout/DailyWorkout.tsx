@@ -30,6 +30,7 @@ export const DailyWorkout: React.FC<DailyWorkoutProps> = ({
   const navigate = useNavigate();
   const trainingContext = useUserStore((state) => state.trainingContext);
   const startWorkout = useWorkoutStore((state) => state.startWorkout);
+  const setPlayerState = useWorkoutStore.setState;
 
   const [isAdapting, setIsAdapting] = useState(false);
 
@@ -55,7 +56,8 @@ export const DailyWorkout: React.FC<DailyWorkoutProps> = ({
 
   const handleStartSession = () => {
     startWorkout(session.dayId, trainingContext);
-    navigate("/session");
+    // navigate("/session");
+    setPlayerState({ playerState: "exercise" });
   };
 
   const isContextAltered = trainingContext !== "normal";

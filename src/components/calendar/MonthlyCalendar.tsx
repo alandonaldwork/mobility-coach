@@ -42,7 +42,15 @@ export const MonthlyCalendar: React.FC = () => {
     navigate('/session');
   };
 
-  const weekDayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekDayHeaders = [
+    { short: 'S', long: 'Sun' },
+    { short: 'M', long: 'Mon' },
+    { short: 'T', long: 'Tue' },
+    { short: 'W', long: 'Wed' },
+    { short: 'T', long: 'Thu' },
+    { short: 'F', long: 'Fri' },
+    { short: 'S', long: 'Sat' },
+  ];
 
   return (
     <div className="space-y-4">
@@ -114,16 +122,17 @@ export const MonthlyCalendar: React.FC = () => {
       </div>
 
       {/* Grid Headers */}
-      <div className="grid grid-cols-7 gap-1.5 text-center">
-        {weekDayHeaders.map((header) => (
-          <div key={header} className="text-[11px] font-mono font-bold text-content-muted uppercase py-1">
-            {header}
+      <div className="grid grid-cols-7 gap-1 sm:gap-1.5 text-center">
+        {weekDayHeaders.map((header, i) => (
+          <div key={i} className="text-[10px] sm:text-[11px] font-mono font-bold text-content-muted uppercase py-1">
+            <span className="sm:hidden">{header.short}</span>
+            <span className="hidden sm:inline">{header.long}</span>
           </div>
         ))}
       </div>
 
       {/* Days Grid */}
-      <div className="grid grid-cols-7 gap-1.5">
+      <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
         {monthDays.map((day, idx) => (
           <DayCell key={`${day.dateString}_${idx}`} day={day} onSelectDay={setSelectedDay} />
         ))}

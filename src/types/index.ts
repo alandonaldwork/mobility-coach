@@ -29,6 +29,7 @@ export interface Exercise {
   intensity: string;
   breathingCues: string;
   cues: string[];
+  steps?: string[];
   commonMistakes: string[];
   bestTime: string[];
   equipment: string[];

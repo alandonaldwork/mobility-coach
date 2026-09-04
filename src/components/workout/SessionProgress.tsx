@@ -1,16 +1,27 @@
-import React from 'react';
-import { useWorkoutStore } from '../../store/useWorkoutStore';
-import { formatSecondsToMMSS } from '../../utils/formatUtils';
-import { X } from 'lucide-react';
+import React from "react";
+import { useWorkoutStore } from "../../store/useWorkoutStore";
+import { formatSecondsToMMSS } from "../../utils/formatUtils";
+import { X } from "lucide-react";
 
 export const SessionProgress: React.FC = () => {
-  const { currentExerciseIndex, filteredExercises, sessionElapsedSeconds, closePlayer } = useWorkoutStore();
+  const {
+    currentExerciseIndex,
+    filteredExercises,
+    sessionElapsedSeconds,
+    closePlayer,
+  } = useWorkoutStore();
 
   const totalExercises = filteredExercises.length;
   const currentNum = currentExerciseIndex + 1;
 
-  const totalPlannedSeconds = filteredExercises.reduce((acc, ex) => acc + (ex.durationSeconds || 30), 0);
-  const remainingSeconds = Math.max(0, totalPlannedSeconds - sessionElapsedSeconds);
+  const totalPlannedSeconds = filteredExercises.reduce(
+    (acc, ex) => acc + (ex.durationSeconds || 30),
+    0,
+  );
+  const remainingSeconds = Math.max(
+    0,
+    totalPlannedSeconds - sessionElapsedSeconds,
+  );
 
   const progressPercent = Math.min(100, (currentNum / totalExercises) * 100);
 
@@ -25,9 +36,19 @@ export const SessionProgress: React.FC = () => {
           </div>
 
           <div className="flex items-center space-x-4 text-content-muted">
-            <span>Elapsed: <strong className="text-content-primary">{formatSecondsToMMSS(sessionElapsedSeconds)}</strong></span>
-            <span>Rem: <strong className="text-content-primary">{formatSecondsToMMSS(remainingSeconds)}</strong></span>
-            
+            <span>
+              Elapsed:{" "}
+              <strong className="text-content-primary">
+                {formatSecondsToMMSS(sessionElapsedSeconds)}
+              </strong>
+            </span>
+            <span>
+              Rem:{" "}
+              <strong className="text-content-primary">
+                {formatSecondsToMMSS(remainingSeconds)}
+              </strong>
+            </span>
+
             <button
               onClick={closePlayer}
               className="p-1 rounded-lg hover:bg-surface-elevated text-content-muted hover:text-content-primary transition-colors"
