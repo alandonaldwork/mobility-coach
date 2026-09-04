@@ -1,28 +1,55 @@
-import React, { useState } from 'react';
-import { Search, BookOpen, ChevronRight, Layers3, RotateCcw, SlidersHorizontal } from 'lucide-react';
-import { UNIFIED_LIBRARY } from '../../data/exercise-catalog';
-import { Exercise, LibraryTag } from '../../types';
-import { ExerciseDetailModal } from './ExerciseDetailModal';
+import React, { useState } from "react";
+import {
+  Search,
+  BookOpen,
+  ChevronRight,
+  Layers3,
+  RotateCcw,
+  SlidersHorizontal,
+} from "lucide-react";
+import { UNIFIED_LIBRARY } from "../../data/exercise-catalog";
+import { Exercise, LibraryTag } from "../../types";
+import { ExerciseDetailModal } from "./ExerciseDetailModal";
 
-type CatalogFilter = 'combined' | LibraryTag;
+type CatalogFilter = "combined" | LibraryTag;
 
 export const ExerciseLibrary: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCatalog, setSelectedCatalog] = useState<CatalogFilter>('combined');
-  const [selectedRegion, setSelectedRegion] = useState<string>('all');
-  const [selectedType, setSelectedType] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCatalog, setSelectedCatalog] =
+    useState<CatalogFilter>("combined");
+  const [selectedRegion, setSelectedRegion] = useState<string>("all");
+  const [selectedType, setSelectedType] = useState<string>("all");
   const [activeExercise, setActiveExercise] = useState<Exercise | null>(null);
 
   const catalogs: { id: CatalogFilter; label: string }[] = [
-    { id: 'combined', label: 'Combined' },
-    { id: 'stretch', label: 'Stretches' },
-    { id: 'mobility', label: 'Mobility' },
+    { id: "combined", label: "Combined" },
+    { id: "stretch", label: "Stretches" },
+    { id: "mobility", label: "Mobility" },
   ];
-  const regions = ['all', 'ankle', 'hip', 'thoracic', 'shoulder', 'neck', 'wrist', 'full-body'];
-  const types = ['all', 'Active', 'Dynamic', 'Activation', 'Passive', 'SMR', 'Breathing', 'Static', 'PNF'];
+  const regions = [
+    "all",
+    "ankle",
+    "hip",
+    "thoracic",
+    "shoulder",
+    "neck",
+    "wrist",
+    "full-body",
+  ];
+  const types = [
+    "all",
+    "Active",
+    "Dynamic",
+    "Activation",
+    "Passive",
+    "SMR",
+    "Breathing",
+    "Static",
+    "PNF",
+  ];
 
   const catalogExercises =
-    selectedCatalog === 'combined'
+    selectedCatalog === "combined"
       ? UNIFIED_LIBRARY
       : UNIFIED_LIBRARY.filter((ex) => ex.libraryTag === selectedCatalog);
 
@@ -32,17 +59,19 @@ export const ExerciseLibrary: React.FC = () => {
       ex.target.toLowerCase().includes(searchQuery.toLowerCase()) ||
       ex.whyItMatters.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesRegion = selectedRegion === 'all' || ex.region === selectedRegion;
-    const matchesType = selectedType === 'all' || ex.type === selectedType;
+    const matchesRegion =
+      selectedRegion === "all" || ex.region === selectedRegion;
+    const matchesType = selectedType === "all" || ex.type === selectedType;
 
     return matchesSearch && matchesRegion && matchesType;
   });
 
-  const hasActiveFilters = searchQuery || selectedRegion !== 'all' || selectedType !== 'all';
+  const hasActiveFilters =
+    searchQuery || selectedRegion !== "all" || selectedType !== "all";
   const resetFilters = () => {
-    setSearchQuery('');
-    setSelectedRegion('all');
-    setSelectedType('all');
+    setSearchQuery("");
+    setSelectedRegion("all");
+    setSelectedType("all");
   };
 
   return (
@@ -57,18 +86,26 @@ export const ExerciseLibrary: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase tracking-[0.16em] font-bold text-volt">Movement reference</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.16em] font-bold text-volt">
+                  Movement reference
+                </span>
               </div>
               <h2 className="text-xl font-extrabold text-content-primary tracking-tight mt-0.5">
                 Exercise Library
               </h2>
-              <p className="text-xs text-content-muted mt-0.5">Browse stretches and mobility drills built for your program.</p>
+              <p className="text-xs text-content-muted mt-0.5">
+                Browse stretches and mobility drills built for your program.
+              </p>
             </div>
           </div>
 
           <div className="self-start sm:text-right bg-surface-elevated/70 border border-surface-border rounded-2xl px-3.5 py-2.5">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-content-muted block">Available drills</span>
-            <span className="text-lg leading-none font-extrabold font-mono text-volt">{catalogExercises.length}</span>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-content-muted block">
+              Available drills
+            </span>
+            <span className="text-lg leading-none font-extrabold font-mono text-volt">
+              {catalogExercises.length}
+            </span>
           </div>
         </div>
 
@@ -91,8 +128,8 @@ export const ExerciseLibrary: React.FC = () => {
                 onClick={() => setSelectedCatalog(catalog.id)}
                 className={`min-w-[84px] px-3 py-2 rounded-xl text-[11px] font-mono transition-all ${
                   selectedCatalog === catalog.id
-                    ? 'bg-volt text-surface-base font-bold shadow-volt-sm'
-                    : 'text-content-secondary hover:text-content-primary hover:bg-surface-card'
+                    ? "bg-volt text-surface-base font-bold shadow-volt-sm"
+                    : "text-content-secondary hover:text-content-primary hover:bg-surface-card"
                 }`}
               >
                 {catalog.label}
@@ -120,7 +157,9 @@ export const ExerciseLibrary: React.FC = () => {
 
           <div className="grid grid-cols-1 xl:grid-cols-[1.15fr_1fr] gap-4 xl:gap-6">
             <div className="space-y-2">
-              <span className="text-[10px] font-mono text-content-muted uppercase block font-bold">Target region</span>
+              <span className="text-[10px] font-mono text-content-muted uppercase block font-bold">
+                Target region
+              </span>
               <div className="flex flex-wrap gap-1.5">
                 {regions.map((region) => (
                   <button
@@ -128,8 +167,8 @@ export const ExerciseLibrary: React.FC = () => {
                     onClick={() => setSelectedRegion(region)}
                     className={`px-3 py-1.5 rounded-lg text-[11px] font-mono capitalize transition-all ${
                       selectedRegion === region
-                        ? 'bg-volt text-surface-base font-bold shadow-volt-sm'
-                        : 'bg-surface-elevated border border-surface-border text-content-secondary hover:border-volt/30 hover:text-content-primary'
+                        ? "bg-volt text-surface-base font-bold shadow-volt-sm"
+                        : "bg-surface-elevated border border-surface-border text-content-secondary hover:border-volt/30 hover:text-content-primary"
                     }`}
                   >
                     {region}
@@ -139,16 +178,18 @@ export const ExerciseLibrary: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-mono text-content-muted uppercase block font-bold">Movement type</span>
+              <span className="text-[10px] font-mono text-content-muted uppercase block font-bold">
+                Movement type
+              </span>
               <div className="flex flex-wrap gap-1.5">
                 {types.map((type) => (
                   <button
                     key={type}
                     onClick={() => setSelectedType(type)}
-                    className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition-all capitalize ${
                       selectedType === type
-                        ? 'bg-volt text-surface-base font-bold shadow-volt-sm'
-                        : 'bg-surface-elevated border border-surface-border text-content-secondary hover:border-volt/30 hover:text-content-primary'
+                        ? "bg-volt text-surface-base font-bold shadow-volt-sm"
+                        : "bg-surface-elevated border border-surface-border text-content-secondary hover:border-volt/30 hover:text-content-primary"
                     }`}
                   >
                     {type}
@@ -163,9 +204,15 @@ export const ExerciseLibrary: React.FC = () => {
       <div className="flex items-center justify-between text-xs font-mono text-content-muted px-1.5">
         <span className="inline-flex items-center gap-2">
           <Layers3 className="w-3.5 h-3.5 text-volt" />
-          Showing <strong className="text-content-primary">{filteredExercises.length}</strong> of {catalogExercises.length} exercises
+          Showing{" "}
+          <strong className="text-content-primary">
+            {filteredExercises.length}
+          </strong>{" "}
+          of {catalogExercises.length} exercises
         </span>
-        {hasActiveFilters && <span className="hidden sm:inline text-volt">Filtered</span>}
+        {hasActiveFilters && (
+          <span className="hidden sm:inline text-volt">Filtered</span>
+        )}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -182,18 +229,18 @@ export const ExerciseLibrary: React.FC = () => {
               <div className="flex items-center gap-1.5">
                 <span
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
-                    ex.libraryTag === 'stretch'
-                      ? 'bg-ember/10 text-ember border border-ember/20'
-                      : 'bg-volt/10 text-volt border border-volt/20'
+                    ex.libraryTag === "stretch"
+                      ? "bg-ember/10 text-ember border border-ember/20"
+                      : "bg-volt/10 text-volt border border-volt/20"
                   }`}
                 >
-                  {ex.libraryTag === 'stretch' ? 'Stretch' : 'Mobility'}
+                  {ex.libraryTag === "stretch" ? "Stretch" : "Mobility"}
                 </span>
                 <span
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
-                    ex.type === 'Passive' || ex.type === 'Static'
-                      ? 'bg-ember/10 text-ember border border-ember/20'
-                      : 'bg-surface-elevated text-content-secondary border border-surface-border'
+                    ex.type === "Passive" || ex.type === "Static"
+                      ? "bg-ember/10 text-ember border border-ember/20"
+                      : "bg-surface-elevated text-content-secondary border border-surface-border"
                   }`}
                 >
                   {ex.type}

@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({ onLogout }) => {
         <div className="w-10 h-10 rounded-xl bg-volt/10 border border-volt/30 flex items-center justify-center text-volt group-hover:bg-volt group-hover:text-surface-base transition-colors shrink-0">
           <Dumbbell className="w-5 h-5" />
         </div>
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-base font-extrabold tracking-tight text-content-primary leading-tight">
             ELITE ATHLETE
           </h1>
