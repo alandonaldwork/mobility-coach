@@ -1,5 +1,6 @@
 import React from 'react';
-import { Settings, Dumbbell, Trash2, CheckCircle2 } from 'lucide-react';
+import { Settings, Dumbbell, Trash2, CheckCircle2, Activity, ArrowRight, ClipboardCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store/useUserStore';
 import { ProgramGoal } from '../types';
 
@@ -10,7 +11,8 @@ const goalOptions: { id: ProgramGoal; label: string; description: string }[] = [
 ];
 
 export const SettingsPage: React.FC = () => {
-  const { equipmentPreferences, actions } = useUserStore();
+  const navigate = useNavigate();
+  const { equipmentPreferences, assessmentRecords, actions } = useUserStore();
   const [showResetConfirm, setShowResetConfirm] = React.useState(false);
   const today = new Date();
   const currentGoal = actions.getGoalForMonth(today.getFullYear(), today.getMonth());
@@ -28,11 +30,36 @@ export const SettingsPage: React.FC = () => {
           </div>
           <div>
             <h2 className="text-lg font-extrabold text-content-primary tracking-tight">
-              Settings & Equipment Preferences
+              Settings & Configuration
             </h2>
-            <p className="text-xs text-content-muted font-sans">Configure available gear & manage local storage</p>
+            <p className="text-xs text-content-muted font-sans">Configure available gear, self-assessments & local storage</p>
           </div>
         </div>
+      </div>
+
+      {/* Mobility Assessment Navigation Card */}
+      <div className="bg-surface-card border border-surface-border rounded-2xl p-5 space-y-3 shadow-elevated">
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <div className="flex items-center space-x-2">
+              <h3 className="text-xs font-mono font-bold text-volt uppercase">Mobility Self-Assessments</h3>
+              <span className="bg-volt/10 text-volt border border-volt/30 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                {assessmentRecords.length} LOGS
+              </span>
+            </div>
+            <p className="text-xs text-content-muted">
+              Bi-weekly joint symmetry & range of motion tests (Ankle, Hip, Thoracic & Shoulder).
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => navigate('/assessments')}
+          className="w-full py-3.5 bg-volt/10 border border-volt/40 hover:bg-volt hover:text-surface-base text-volt font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-volt-sm flex items-center justify-center space-x-2 group"
+        >
+          <ClipboardCheck className="w-4 h-4" />
+          <span>OPEN MOBILITY ASSESSMENTS & LOGS</span>
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </button>
       </div>
 
       <div className="bg-surface-card border border-surface-border rounded-2xl p-5 space-y-3 shadow-elevated">

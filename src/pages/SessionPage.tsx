@@ -11,6 +11,7 @@ import { DailyWorkout } from '../components/workout/DailyWorkout';
 import { getSessionForDate } from '../utils/dateUtils';
 import { useUserStore } from '../store/useUserStore';
 import { Play } from 'lucide-react';
+import { TRAINING_CONTEXT_RULES } from '../data/training-context-modifications';
 
 export const SessionPage: React.FC = () => {
   const navigate = useNavigate();
@@ -104,9 +105,16 @@ export const SessionPage: React.FC = () => {
       <div className="flex-1 w-full max-w-xl min-[1001px]:max-w-[80%] mx-auto px-4 py-6 space-y-5 pb-16 flex flex-col justify-center">
         {/* Exercise Header */}
         <div className="text-center space-y-1">
-          <span className="text-[11px] font-mono font-bold text-volt uppercase tracking-wider">
-            {activeSession.name}
-          </span>
+          <div className="flex items-center justify-center space-x-2">
+            <span className="text-[11px] font-mono font-bold text-volt uppercase tracking-wider">
+              {activeSession.name}
+            </span>
+            {trainingContext !== 'normal' && (
+              <span className="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                {TRAINING_CONTEXT_RULES[trainingContext]?.label || trainingContext}
+              </span>
+            )}
+          </div>
           <h2 className="text-2xl font-black text-content-primary">
             {currentExDetails.name}
           </h2>
