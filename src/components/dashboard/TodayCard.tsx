@@ -46,28 +46,28 @@ export const TodayCard: React.FC = () => {
   const isContextAltered = trainingContext !== 'normal';
 
   return (
-    <div className="bg-surface-card border border-surface-border rounded-2xl p-5 relative overflow-hidden space-y-4 shadow-elevated">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center space-x-2">
-            <span className="text-[11px] font-mono font-bold text-volt uppercase tracking-wider block">
+    <div className="bg-surface-card border border-surface-border rounded-2xl p-4 sm:p-5 relative overflow-hidden space-y-3.5 sm:space-y-4 shadow-elevated">
+      <div className="flex items-start justify-between gap-2.5">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[10px] sm:text-[11px] font-mono font-bold text-volt uppercase tracking-wider block">
               TODAY'S SCHEDULED SESSION
             </span>
             {isContextAltered && (
-              <span className="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center space-x-1">
+              <span className="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[9px] sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center space-x-1 shrink-0">
                 <Activity className="w-3 h-3 inline mr-0.5" />
                 <span>{contextRule.label}</span>
               </span>
             )}
           </div>
-          <h2 className="text-xl font-extrabold text-content-primary tracking-tight mt-0.5">
+          <h2 className="text-base sm:text-xl font-extrabold text-content-primary tracking-tight mt-0.5 line-clamp-2 leading-snug">
             Day {modifiedSession.dayId}: {modifiedSession.name}
           </h2>
-          <p className="text-xs text-content-muted mt-1 font-sans">{formattedDate}</p>
+          <p className="text-[11px] sm:text-xs text-content-muted mt-0.5 font-sans">{formattedDate}</p>
         </div>
-        <div className="bg-volt/10 border border-volt/30 rounded-xl px-3 py-1.5 text-center">
-          <span className="text-xs font-mono font-bold text-volt block">DAY</span>
-          <span className="text-lg font-extrabold font-mono text-volt leading-none">{modifiedSession.dayId}</span>
+        <div className="bg-volt/10 border border-volt/30 rounded-xl px-2.5 sm:px-3 py-1.5 text-center shrink-0">
+          <span className="text-[10px] sm:text-xs font-mono font-bold text-volt block">DAY</span>
+          <span className="text-base sm:text-lg font-extrabold font-mono text-volt leading-none">{modifiedSession.dayId}</span>
         </div>
       </div>
 

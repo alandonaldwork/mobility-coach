@@ -18,31 +18,31 @@ export const StreakCard: React.FC = () => {
       {/* Accent glow */}
       <div className="absolute -top-12 -right-12 w-32 h-32 bg-volt/10 rounded-full blur-2xl pointer-events-none" />
 
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2">
+      <div className="flex items-center justify-between gap-3">
+        <div className="space-y-1 min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-xs font-mono text-volt font-bold uppercase tracking-wider">
               30-MIN GOAL STREAK
             </span>
             {isGoalAchieved && (
-              <span className="inline-flex items-center space-x-1 bg-state-success/10 border border-state-success/30 text-state-success text-[10px] px-2 py-0.5 rounded-full font-bold">
+              <span className="inline-flex items-center space-x-1 bg-state-success/10 border border-state-success/30 text-state-success text-[10px] px-2 py-0.5 rounded-full font-bold shrink-0">
                 <CheckCircle2 className="w-3 h-3" />
                 <span>QUALIFIED TODAY</span>
               </span>
             )}
           </div>
           <div className="flex items-baseline space-x-2">
-            <span className="text-4xl font-extrabold font-mono text-content-primary tracking-tight">
+            <span className="text-3xl sm:text-4xl font-extrabold font-mono text-content-primary tracking-tight">
               {currentStreak}
             </span>
-            <span className="text-sm font-semibold text-content-muted">
+            <span className="text-xs sm:text-sm font-semibold text-content-muted">
               DAYS STREAK
             </span>
           </div>
         </div>
 
-        <div className="w-14 h-14 rounded-2xl bg-surface-elevated border border-surface-border flex items-center justify-center text-ember shadow-inner">
-          <Flame className={`w-8 h-8 ${currentStreak > 0 ? 'animate-pulse' : 'text-content-muted'}`} />
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-surface-elevated border border-surface-border flex items-center justify-center text-ember shadow-inner shrink-0">
+          <Flame className={`w-7 h-7 sm:w-8 sm:h-8 ${currentStreak > 0 ? 'animate-pulse' : 'text-content-muted'}`} />
         </div>
       </div>
 

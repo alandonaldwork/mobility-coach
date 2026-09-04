@@ -89,7 +89,7 @@ export const TrainingContextSelector: React.FC = () => {
         ) : null}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
         {contexts.map((item) => {
           const isSelected = currentContext === item.id;
           const Icon = item.icon;
@@ -97,7 +97,7 @@ export const TrainingContextSelector: React.FC = () => {
             <button
               key={item.id}
               onClick={() => handleSelectContext(item.id)}
-              className={`p-2.5 rounded-xl border text-left flex flex-col justify-between space-y-1 transition-all ${
+              className={`p-2 sm:p-2.5 rounded-xl border text-left flex flex-col justify-between min-w-0 space-y-1 transition-all ${
                 isSelected
                   ? "bg-volt/10 border-volt text-volt font-bold shadow-volt-sm"
                   : "bg-surface-elevated border-surface-border text-content-secondary hover:text-content-primary hover:border-surface-highlight"
@@ -105,15 +105,15 @@ export const TrainingContextSelector: React.FC = () => {
             >
               <div className="flex items-center justify-between w-full">
                 <Icon
-                  className={`w-4 h-4 flex-shrink-0 ${isSelected ? "text-volt" : "text-content-muted"}`}
+                  className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${isSelected ? "text-volt" : "text-content-muted"}`}
                 />
-                {isSelected && <Check className="w-3.5 h-3.5 text-volt" />}
+                {isSelected && <Check className="w-3.5 h-3.5 text-volt shrink-0" />}
               </div>
-              <span className="text-xs font-bold truncate block">
+              <span className="text-[11px] sm:text-xs font-bold truncate block w-full min-w-0">
                 {item.label}
               </span>
               <span
-                className={`text-[9px] font-mono block ${isSelected ? "text-volt/90 font-semibold" : "text-content-muted"}`}
+                className={`text-[9px] font-mono block truncate w-full min-w-0 ${isSelected ? "text-volt/90 font-semibold" : "text-content-muted"}`}
               >
                 {item.impact}
               </span>

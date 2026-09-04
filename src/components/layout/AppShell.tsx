@@ -41,7 +41,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, onLogout }) => {
       <Sidebar isCollapsed={isSidebarCollapsed} onToggleCollapse={toggleSidebar} />
       
       <main
-        className={`flex-1 w-full mx-auto px-4 sm:px-8 py-6 transition-[padding-left] duration-300 ease-in-out max-[1000px]:pb-20 max-[1000px]:max-w-4xl min-[1001px]:max-w-none ${
+        className={`flex-1 w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 transition-[padding-left] duration-300 ease-in-out max-[1000px]:pb-24 max-[1000px]:max-w-4xl min-[1001px]:max-w-none ${
           isSidebarCollapsed ? 'min-[1001px]:pl-28' : 'min-[1001px]:pl-72'
         }`}
       >

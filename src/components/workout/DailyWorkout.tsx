@@ -168,24 +168,24 @@ export const DailyWorkout: React.FC<DailyWorkoutProps> = ({
             return (
               <div
                 key={`${se.exerciseId}_${idx}`}
-                className="bg-surface-card border border-surface-border rounded-xl p-3.5 flex items-center justify-between hover:border-surface-highlight transition-colors"
+                className="bg-surface-card border border-surface-border rounded-xl p-3 sm:p-3.5 flex items-center justify-between gap-2.5 hover:border-surface-highlight transition-colors"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-7 h-7 rounded-lg bg-surface-elevated text-volt font-mono font-bold text-xs flex items-center justify-center border border-surface-border">
+                <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0 flex-1">
+                  <div className="w-7 h-7 rounded-lg bg-surface-elevated text-volt font-mono font-bold text-xs flex items-center justify-center border border-surface-border shrink-0">
                     {idx + 1}
                   </div>
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <h4 className="text-sm font-bold text-content-primary">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <h4 className="text-xs sm:text-sm font-bold text-content-primary truncate">
                         {exDetails.name}
                       </h4>
                       {status?.tag && (
-                        <span className="bg-volt/10 text-volt border border-volt/30 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded">
+                        <span className="bg-volt/10 text-volt border border-volt/30 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0">
                           {status.tag}
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-content-muted font-mono">
+                    <p className="text-[10px] sm:text-[11px] text-content-muted font-mono truncate">
                       {se.dose} •{" "}
                       <span className="text-volt">
                         {se.durationSeconds}s duration
@@ -194,9 +194,9 @@ export const DailyWorkout: React.FC<DailyWorkoutProps> = ({
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="text-right shrink-0">
                   <span
-                    className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
+                    className={`text-[9px] sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
                       exDetails.type === "Passive"
                         ? "bg-ember/10 border border-ember/30 text-ember"
                         : "bg-volt/10 border border-volt/30 text-volt"

@@ -99,7 +99,7 @@ export const ExerciseLibrary: React.FC = () => {
             </div>
           </div>
 
-          <div className="self-start sm:text-right bg-surface-elevated/70 border border-surface-border rounded-2xl px-3.5 py-2.5">
+          <div className="hidden sm:block self-start sm:text-right bg-surface-elevated/70 border border-surface-border rounded-2xl px-3.5 py-2.5">
             <span className="text-[10px] font-mono uppercase tracking-wider text-content-muted block">
               Available drills
             </span>
@@ -126,7 +126,7 @@ export const ExerciseLibrary: React.FC = () => {
               <button
                 key={catalog.id}
                 onClick={() => setSelectedCatalog(catalog.id)}
-                className={`min-w-[84px] px-3 py-2 rounded-xl text-[11px] font-mono transition-all ${
+                className={`px-2 py-1.5 rounded-xl text-[10px] sm:text-[11px] font-mono transition-all text-center truncate ${
                   selectedCatalog === catalog.id
                     ? "bg-volt text-surface-base font-bold shadow-volt-sm"
                     : "text-content-secondary hover:text-content-primary hover:bg-surface-card"
@@ -165,7 +165,7 @@ export const ExerciseLibrary: React.FC = () => {
                   <button
                     key={region}
                     onClick={() => setSelectedRegion(region)}
-                    className={`px-3 py-1.5 rounded-lg text-[11px] font-mono capitalize transition-all ${
+                    className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-mono capitalize transition-all ${
                       selectedRegion === region
                         ? "bg-volt text-surface-base font-bold shadow-volt-sm"
                         : "bg-surface-elevated border border-surface-border text-content-secondary hover:border-volt/30 hover:text-content-primary"
@@ -186,7 +186,7 @@ export const ExerciseLibrary: React.FC = () => {
                   <button
                     key={type}
                     onClick={() => setSelectedType(type)}
-                    className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition-all capitalize ${
+                    className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-mono transition-all capitalize ${
                       selectedType === type
                         ? "bg-volt text-surface-base font-bold shadow-volt-sm"
                         : "bg-surface-elevated border border-surface-border text-content-secondary hover:border-volt/30 hover:text-content-primary"
@@ -220,13 +220,13 @@ export const ExerciseLibrary: React.FC = () => {
           <div
             key={`${ex.libraryTag}-${ex.id}`}
             onClick={() => setActiveExercise(ex)}
-            className="bg-surface-card border border-surface-border hover:border-volt/40 rounded-2xl p-4 cursor-pointer transition-all hover:bg-surface-elevated space-y-2 group shadow-card"
+            className="bg-surface-card border border-surface-border hover:border-volt/40 rounded-2xl p-3.5 sm:p-4 cursor-pointer transition-all hover:bg-surface-elevated space-y-2 group shadow-card"
           >
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono font-bold text-volt uppercase bg-volt/10 border border-volt/20 px-2 py-0.5 rounded-md">
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <span className="text-[10px] font-mono font-bold text-volt uppercase bg-volt/10 border border-volt/20 px-2 py-0.5 rounded-md shrink-0">
                 #{ex.id} · {ex.region}
               </span>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 shrink-0">
                 <span
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
                     ex.libraryTag === "stretch"

@@ -45,29 +45,29 @@ export const ProgressDashboard: React.FC = () => {
       </div>
 
       {/* KPI Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-4 space-y-1 shadow-card">
-          <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1">
-            <Flame className="w-3.5 h-3.5 text-ember" />
-            <span>Current Streak</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+        <div className="bg-surface-card border border-surface-border rounded-2xl p-3 sm:p-4 space-y-1 shadow-card min-w-0">
+          <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1 truncate">
+            <Flame className="w-3.5 h-3.5 text-ember shrink-0" />
+            <span className="truncate">Current Streak</span>
           </span>
-          <p className="text-2xl font-black font-mono text-content-primary">{currentStreak} <span className="text-xs text-content-muted">days</span></p>
+          <p className="text-xl sm:text-2xl font-black font-mono text-content-primary truncate">{currentStreak} <span className="text-xs text-content-muted font-sans font-normal">days</span></p>
         </div>
 
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-4 space-y-1 shadow-card">
-          <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1">
-            <Trophy className="w-3.5 h-3.5 text-state-warning" />
-            <span>Longest Streak</span>
+        <div className="bg-surface-card border border-surface-border rounded-2xl p-3 sm:p-4 space-y-1 shadow-card min-w-0">
+          <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1 truncate">
+            <Trophy className="w-3.5 h-3.5 text-state-warning shrink-0" />
+            <span className="truncate">Longest Streak</span>
           </span>
-          <p className="text-2xl font-black font-mono text-content-primary">{longestStreak} <span className="text-xs text-content-muted">days</span></p>
+          <p className="text-xl sm:text-2xl font-black font-mono text-content-primary truncate">{longestStreak} <span className="text-xs text-content-muted font-sans font-normal">days</span></p>
         </div>
 
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-4 space-y-1 shadow-card">
-          <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1">
-            <Clock className="w-3.5 h-3.5 text-volt" />
-            <span>Total Mobility Time</span>
+        <div className="bg-surface-card border border-surface-border rounded-2xl p-3 sm:p-4 space-y-1 shadow-card min-w-0">
+          <span className="text-[10px] font-mono text-content-muted uppercase flex items-center space-x-1 truncate">
+            <Clock className="w-3.5 h-3.5 text-volt shrink-0" />
+            <span className="truncate">Total Time</span>
           </span>
-          <p className="text-2xl font-black font-mono text-volt">{totalMinutes} <span className="text-xs text-content-muted">min</span></p>
+          <p className="text-xl sm:text-2xl font-black font-mono text-volt truncate">{totalMinutes} <span className="text-xs text-content-muted font-sans font-normal">min</span></p>
         </div>
 
         <div className="bg-surface-card border border-surface-border rounded-2xl p-4 space-y-1 shadow-card">
