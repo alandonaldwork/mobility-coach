@@ -1,6 +1,6 @@
-import React from 'react';
 import { StreakCard } from './StreakCard';
 import { TodayCard } from './TodayCard';
+import { BodyMapQuickCard } from './BodyMapQuickCard';
 import { WeeklyRing } from './WeeklyRing';
 import { QuickActions } from './QuickActions';
 import { TrainingContextSelector } from '../context/TrainingContextSelector';
@@ -14,6 +14,9 @@ export const Dashboard: React.FC = () => {
 
       {/* Today's Workout Card */}
       <TodayCard />
+
+      {/* Targeted Relief / Body Map Quick Launcher */}
+      <BodyMapQuickCard />
 
       {/* Training Context Selector */}
       <TrainingContextSelector />

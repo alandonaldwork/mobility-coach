@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Zap, Calendar, BookOpen, Activity, ChevronRight } from 'lucide-react';
+import { Clock, Zap, Calendar, BookOpen, Activity, ChevronRight, Crosshair } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useWorkoutStore } from '../../store/useWorkoutStore';
 
@@ -71,12 +71,20 @@ export const QuickActions: React.FC = () => {
       </div>
 
       {/* Navigation Shortcut Grid */}
-      <div className="grid grid-cols-3 gap-2.5 pt-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+        <button
+          onClick={() => navigate('/relief')}
+          className="bg-surface-card border border-surface-border hover:border-volt/50 p-3 rounded-xl flex flex-col items-center justify-center text-center space-y-1 hover:bg-surface-elevated transition-all group"
+        >
+          <Crosshair className="w-5 h-5 text-volt group-hover:scale-110 transition-transform" />
+          <span className="text-xs font-semibold text-content-primary">Body Map</span>
+        </button>
+
         <button
           onClick={() => navigate('/calendar')}
           className="bg-surface-card border border-surface-border hover:border-surface-highlight p-3 rounded-xl flex flex-col items-center justify-center text-center space-y-1 hover:bg-surface-elevated transition-colors"
         >
-          <Calendar className="w-5 h-5 text-volt" />
+          <Calendar className="w-5 h-5 text-content-secondary" />
           <span className="text-xs font-semibold text-content-primary">Calendar</span>
         </button>
 
@@ -84,15 +92,15 @@ export const QuickActions: React.FC = () => {
           onClick={() => navigate('/library')}
           className="bg-surface-card border border-surface-border hover:border-surface-highlight p-3 rounded-xl flex flex-col items-center justify-center text-center space-y-1 hover:bg-surface-elevated transition-colors"
         >
-          <BookOpen className="w-5 h-5 text-volt" />
-          <span className="text-xs font-semibold text-content-primary">32 Library</span>
+          <BookOpen className="w-5 h-5 text-content-secondary" />
+          <span className="text-xs font-semibold text-content-primary">Library</span>
         </button>
 
         <button
           onClick={() => navigate('/assessments')}
           className="bg-surface-card border border-surface-border hover:border-surface-highlight p-3 rounded-xl flex flex-col items-center justify-center text-center space-y-1 hover:bg-surface-elevated transition-colors"
         >
-          <Activity className="w-5 h-5 text-volt" />
+          <Activity className="w-5 h-5 text-content-secondary" />
           <span className="text-xs font-semibold text-content-primary">Assessment</span>
         </button>
       </div>

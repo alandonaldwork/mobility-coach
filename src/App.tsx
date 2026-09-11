@@ -10,6 +10,7 @@ import { AssessmentsPage } from './pages/AssessmentsPage';
 import { ProgressionPage } from './pages/ProgressionPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { SessionPage } from './pages/SessionPage';
+import { ReliefPage } from './pages/ReliefPage';
 import { LoginPage } from './pages/LoginPage';
 
 const AnimatedRoutes: React.FC = () => {
@@ -30,6 +31,7 @@ const AnimatedRoutes: React.FC = () => {
       >
         <Routes location={location}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/relief" element={<ReliefPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/progress" element={<ProgressPage />} />

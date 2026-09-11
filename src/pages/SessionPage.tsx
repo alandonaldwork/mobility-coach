@@ -16,26 +16,33 @@ import {
   LayoutList,
   Play,
   ShieldAlert,
+  Sun,
   Wind,
 } from "lucide-react";
 import { TRAINING_CONTEXT_RULES } from "../data/training-context-modifications";
+import { useWorkoutAudio } from "../hooks/useWorkoutAudio";
+import { useWakeLock } from "../hooks/useWakeLock";
 
 type Tab = "details" | "instructions";
 
 export const SessionPage: React.FC = () => {
+  useWorkoutAudio();
   const navigate = useNavigate();
   const {
     playerState,
     activeSession,
     filteredExercises,
     currentExerciseIndex,
+    isPaused,
     closePlayer,
     startWorkout,
   } = useWorkoutStore();
+
+  const isWorkoutActive = (playerState === "exercise" || playerState === "transition") && !isPaused;
+  const { isSupported: wakeLockSupported, isActive: wakeLockActive } = useWakeLock(isWorkoutActive);
   const setPlayerState = useWorkoutStore.setState;
   const trainingContext = useUserStore((state) => state.trainingContext);
   const [activeTab, setActiveTab] = useState<Tab>("details");
-
   // Auto-start today's session if navigated to /session directly in idle state
   useEffect(() => {
     if (playerState === "idle" && !activeSession) {
@@ -132,10 +139,19 @@ export const SessionPage: React.FC = () => {
       <div className="flex-1 w-full max-w-xl min-[1001px]:max-w-[80%] mx-auto px-4 py-6 space-y-5 pb-16 flex flex-col justify-center">
         {/* Exercise Header */}
         <div className="text-center space-y-1">
-          <div className="flex items-center justify-center space-x-2">
+          <div className="flex items-center justify-center flex-wrap gap-2">
             <span className="text-[11px] font-mono font-bold text-volt uppercase tracking-wider">
               {activeSession.name}
             </span>
+            {wakeLockSupported && wakeLockActive && (
+              <span
+                className="inline-flex items-center space-x-1 bg-volt/10 border border-volt/30 text-volt text-[10px] font-mono font-bold px-2 py-0.5 rounded-full shadow-volt-sm"
+                title="Screen Wake Lock is active - display won't turn off during this workout"
+              >
+                <Sun className="w-3 h-3 text-volt animate-pulse" />
+                <span>SCREEN AWAKE</span>
+              </span>
+            )}
             {trainingContext !== "normal" && (
               <span className="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
                 {TRAINING_CONTEXT_RULES[trainingContext]?.label ||

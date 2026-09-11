@@ -11,7 +11,8 @@ import {
   Flame, 
   ChevronLeft, 
   ChevronRight,
-  ClipboardCheck
+  ClipboardCheck,
+  Crosshair
 } from 'lucide-react';
 import { useUserStore } from '../../store/useUserStore';
 
@@ -25,6 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
 
   const navItems = [
     { to: '/', label: 'Home', icon: Home },
+    { to: '/relief', label: 'Body Map', icon: Crosshair },
     { to: '/calendar', label: 'Calendar', icon: Calendar },
     { to: '/library', label: 'Library', icon: BookOpen },
     { to: '/assessments', label: 'Assessments', icon: ClipboardCheck },

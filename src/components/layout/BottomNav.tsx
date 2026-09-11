@@ -5,8 +5,7 @@ import {
   Calendar,
   BookOpen,
   BarChart3,
-  ShieldCheck,
-  Zap,
+  Crosshair,
 } from "lucide-react";
 
 export const BottomNav: React.FC = () => {
@@ -15,7 +14,7 @@ export const BottomNav: React.FC = () => {
     { to: "/calendar", label: "Calendar", icon: Calendar },
     { to: "/library", label: "Library", icon: BookOpen },
     { to: "/progress", label: "Stats", icon: BarChart3 },
-    { to: "/progression", label: "Plan", icon: Zap },
+    { to: "/relief", label: "Body Map", icon: Crosshair },
   ];
 
   return (

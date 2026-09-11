@@ -32,6 +32,9 @@ export const ExerciseTimer: React.FC<ExerciseTimerProps> = ({ exercise, dose }) 
 
   const totalDuration = exercise.durationSeconds || 30;
   const progressPercent = Math.min(100, Math.max(0, ((totalDuration - exerciseTimerSeconds) / totalDuration) * 100));
+  const halfwaySeconds = Math.floor(totalDuration / 2);
+  const isSwitchingNow = exercise.isBilateral && halfwaySeconds > 0 && (exerciseTimerSeconds === halfwaySeconds || exerciseTimerSeconds === halfwaySeconds - 1);
+  const currentSide = exerciseTimerSeconds > halfwaySeconds ? 1 : 2;
 
   return (
     <div className="bg-surface-card border border-surface-border rounded-3xl p-6 shadow-elevated flex flex-col items-center justify-center space-y-6 relative overflow-hidden">
@@ -41,8 +44,16 @@ export const ExerciseTimer: React.FC<ExerciseTimerProps> = ({ exercise, dose }) 
           {exercise.type}
         </span>
         {exercise.isBilateral && (
-          <span className="text-xs font-mono font-bold text-ember uppercase tracking-wider bg-ember/10 border border-ember/30 px-3 py-1 rounded-full">
-            Left / Right Sides
+          <span
+            className={`text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border transition-all duration-300 ${
+              isSwitchingNow
+                ? 'bg-volt text-surface-base border-volt shadow-volt scale-105'
+                : currentSide === 1
+                ? 'bg-ember/10 border-ember/30 text-ember'
+                : 'bg-volt/10 border-volt/30 text-volt'
+            }`}
+          >
+            {isSwitchingNow ? '⚡ SWITCH SIDES NOW ⚡' : `Side ${currentSide} of 2`}
           </span>
         )}
       </div>
