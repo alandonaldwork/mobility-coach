@@ -3,6 +3,8 @@ import { Flame, Dumbbell, LogOut } from 'lucide-react';
 import { useUserStore } from '../../store/useUserStore';
 import { useNavigate } from 'react-router-dom';
 
+import { ThemeToggle } from '../shared/ThemeToggle';
+
 interface HeaderProps {
   onLogout: () => void;
 }
@@ -30,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ onLogout }) => {
         </div>
       </div>
 
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-2 sm:space-x-3">
         {/* Streak pill */}
         <div className="flex items-center space-x-1.5 bg-surface-card border border-surface-border px-3 py-1.5 rounded-full">
           <Flame className={`w-4 h-4 ${currentStreak > 0 ? 'text-ember animate-pulse' : 'text-content-muted'}`} />
@@ -38,6 +40,10 @@ export const Header: React.FC<HeaderProps> = ({ onLogout }) => {
             {currentStreak} <span className="text-content-muted font-normal text-[10px]">DAYS</span>
           </span>
         </div>
+        
+        {/* Theme Toggle Button */}
+        <ThemeToggle />
+
         <button onClick={onLogout} className="h-8 px-2.5 sm:px-3 rounded-lg border border-surface-border text-content-muted hover:text-content-primary hover:border-volt/40 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors" title="Log out"><LogOut className="w-3.5 h-3.5" /><span className="hidden sm:inline">Log out</span></button>
       </div>
     </header>

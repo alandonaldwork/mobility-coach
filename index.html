@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -17,6 +17,16 @@
       name="description"
       content="Daily mobility coaching for elite sport athletes"
     />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('elite_mobility_theme');
+          var theme = (saved === 'light') ? 'light' : 'dark';
+          document.documentElement.classList.remove('light', 'dark');
+          document.documentElement.classList.add(theme);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

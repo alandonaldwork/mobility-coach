@@ -67,9 +67,9 @@ export const BodyMapSvg: React.FC<BodyMapSvgProps> = ({
         >
           <defs>
             <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1e293b" stopOpacity="0.9" />
-              <stop offset="50%" stopColor="#0f172a" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#1e293b" stopOpacity="0.9" />
+              <stop offset="0%" stopColor="var(--silhouette-grad-start, #1e293b)" stopOpacity="0.9" />
+              <stop offset="50%" stopColor="var(--silhouette-grad-mid, #0f172a)" stopOpacity="0.95" />
+              <stop offset="100%" stopColor="var(--silhouette-grad-start, #1e293b)" stopOpacity="0.9" />
             </linearGradient>
             <linearGradient id="glowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#ccff00" stopOpacity="0.2" />
@@ -83,28 +83,28 @@ export const BodyMapSvg: React.FC<BodyMapSvgProps> = ({
             <path
               d="M150,30 C162,30 172,42 172,58 C172,74 163,85 158,88 L158,102 L142,102 L142,88 C137,85 128,74 128,58 C128,42 138,30 150,30 Z"
               fill="url(#bodyGrad)"
-              stroke="#334155"
+              stroke="var(--silhouette-stroke, #334155)"
               strokeWidth="2"
             />
             {/* Traps & Torso */}
             <path
               d="M142,102 L112,114 C98,120 90,132 88,150 L84,200 C83,212 80,225 76,238 L62,285 C59,295 64,305 74,307 C82,309 90,303 93,295 L106,242 C108,234 112,226 116,220 L118,255 L118,295 L124,310 L136,315 L144,300 L150,300 L156,300 L164,315 L176,310 L182,295 L182,255 L184,220 C188,226 192,234 194,242 L207,295 C210,303 218,309 226,307 C236,305 241,295 238,285 L224,238 C220,225 217,212 216,200 L212,150 C210,132 202,120 188,114 L158,102 Z"
               fill="url(#bodyGrad)"
-              stroke="#334155"
+              stroke="var(--silhouette-stroke, #334155)"
               strokeWidth="2"
             />
             {/* Left Leg */}
             <path
               d="M124,310 L116,380 C114,402 116,420 119,442 L121,475 C121,484 115,492 126,494 C136,495 140,488 139,478 L136,442 C134,420 137,402 142,380 L144,300 Z"
               fill="url(#bodyGrad)"
-              stroke="#334155"
+              stroke="var(--silhouette-stroke, #334155)"
               strokeWidth="2"
             />
             {/* Right Leg */}
             <path
               d="M156,300 L158,380 C163,402 166,420 164,442 L161,478 C160,488 164,495 174,494 C185,492 179,484 179,475 L181,442 C184,420 186,402 184,380 L176,310 Z"
               fill="url(#bodyGrad)"
-              stroke="#334155"
+              stroke="var(--silhouette-stroke, #334155)"
               strokeWidth="2"
             />
 

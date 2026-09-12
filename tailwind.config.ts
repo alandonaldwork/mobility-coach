@@ -1,29 +1,30 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        volt: '#C5F135',
-        ember: '#FF6B35',
+        volt: 'rgb(var(--color-volt) / <alpha-value>)',
+        ember: 'rgb(var(--color-ember) / <alpha-value>)',
         surface: {
-          base: '#080C0E',
-          card: '#111518',
-          elevated: '#1A2026',
-          border: '#232D35',
-          highlight: '#2C3840',
+          base: 'rgb(var(--surface-base) / <alpha-value>)',
+          card: 'rgb(var(--surface-card) / <alpha-value>)',
+          elevated: 'rgb(var(--surface-elevated) / <alpha-value>)',
+          border: 'rgb(var(--surface-border) / <alpha-value>)',
+          highlight: 'rgb(var(--surface-highlight) / <alpha-value>)',
         },
         content: {
-          primary: '#EEF3F8',
-          secondary: '#9DAFC0',
-          muted: '#6B7F8F',
-          inverse: '#080C0E',
+          primary: 'rgb(var(--content-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--content-secondary) / <alpha-value>)',
+          muted: 'rgb(var(--content-muted) / <alpha-value>)',
+          inverse: 'rgb(var(--content-inverse) / <alpha-value>)',
         },
         state: {
-          success: '#22C55E',
-          warning: '#F59E0B',
-          danger: '#EF4444',
+          success: 'rgb(var(--state-success) / <alpha-value>)',
+          warning: 'rgb(var(--state-warning) / <alpha-value>)',
+          danger: 'rgb(var(--state-danger) / <alpha-value>)',
         },
       },
       fontFamily: {
@@ -43,10 +44,10 @@ const config: Config = {
         'scale-in': { from: { transform: 'scale(0.9)', opacity: '0' }, to: { transform: 'scale(1)', opacity: '1' } },
       },
       boxShadow: {
-        volt: '0 0 20px rgba(197,241,53,0.25)',
-        'volt-sm': '0 0 10px rgba(197,241,53,0.15)',
-        card: '0 1px 3px rgba(0,0,0,0.4)',
-        elevated: '0 4px 16px rgba(0,0,0,0.5)',
+        volt: 'var(--shadow-volt)',
+        'volt-sm': 'var(--shadow-volt-sm)',
+        card: 'var(--shadow-card)',
+        elevated: 'var(--shadow-elevated)',
       },
     },
   },

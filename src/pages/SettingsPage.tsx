@@ -1,7 +1,8 @@
 import React from 'react';
-import { Settings, Dumbbell, Trash2, CheckCircle2, Activity, ArrowRight, ClipboardCheck } from 'lucide-react';
+import { Settings, Dumbbell, Trash2, CheckCircle2, Activity, ArrowRight, ClipboardCheck, Sun, Moon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store/useUserStore';
+import { useTheme } from '../hooks/useTheme';
 import { ProgramGoal } from '../types';
 
 const goalOptions: { id: ProgramGoal; label: string; description: string }[] = [
@@ -12,6 +13,7 @@ const goalOptions: { id: ProgramGoal; label: string; description: string }[] = [
 
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
   const { equipmentPreferences, assessmentRecords, actions } = useUserStore();
   const [showResetConfirm, setShowResetConfirm] = React.useState(false);
   const today = new Date();
@@ -32,8 +34,70 @@ export const SettingsPage: React.FC = () => {
             <h2 className="text-lg font-extrabold text-content-primary tracking-tight">
               Settings & Configuration
             </h2>
-            <p className="text-xs text-content-muted font-sans">Configure available gear, self-assessments & local storage</p>
+            <p className="text-xs text-content-muted font-sans">Configure visual theme, gear, self-assessments & local storage</p>
           </div>
+        </div>
+      </div>
+
+      {/* Theme / Appearance Section */}
+      <div className="bg-surface-card border border-surface-border rounded-2xl p-5 space-y-3 shadow-elevated">
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <h3 className="text-xs font-mono font-bold text-volt uppercase">Appearance & Theme</h3>
+            <p className="text-xs text-content-muted">Choose your preferred visual mode for mobility and recovery sessions.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <button
+            type="button"
+            onClick={() => setTheme('dark')}
+            className={`p-3.5 rounded-xl border flex items-center justify-between transition-all text-left ${
+              theme === 'dark'
+                ? 'bg-volt/10 border-volt/50 shadow-volt-sm text-content-primary'
+                : 'bg-surface-elevated border-surface-border text-content-muted hover:border-volt/30'
+            }`}
+          >
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-lg bg-surface-base border border-surface-border flex items-center justify-center text-volt">
+                <Moon className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold block text-content-primary">Dark Theme</span>
+                <span className="text-[11px] text-content-muted">Athletic black & electric volt (Default)</span>
+              </div>
+            </div>
+            <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
+              theme === 'dark' ? 'bg-volt border-volt text-surface-base' : 'border-surface-border'
+            }`}>
+              {theme === 'dark' && <CheckCircle2 className="w-4 h-4" />}
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setTheme('light')}
+            className={`p-3.5 rounded-xl border flex items-center justify-between transition-all text-left ${
+              theme === 'light'
+                ? 'bg-volt/10 border-volt/50 shadow-volt-sm text-content-primary'
+                : 'bg-surface-elevated border-surface-border text-content-muted hover:border-volt/30'
+            }`}
+          >
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-lg bg-surface-base border border-surface-border flex items-center justify-center text-ember">
+                <Sun className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold block text-content-primary">Light Theme</span>
+                <span className="text-[11px] text-content-muted">Clean high-contrast daytime mode</span>
+              </div>
+            </div>
+            <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
+              theme === 'light' ? 'bg-volt border-volt text-surface-base' : 'border-surface-border'
+            }`}>
+              {theme === 'light' && <CheckCircle2 className="w-4 h-4" />}
+            </div>
+          </button>
         </div>
       </div>
 
