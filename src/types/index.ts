@@ -36,6 +36,7 @@ export interface Exercise {
   safetyNotes?: string;
   passiveRestriction?: string;
   libraryTag?: LibraryTag;
+  mediaUrl?: string;
 }
 
 export interface SessionExercise {
@@ -45,6 +46,13 @@ export interface SessionExercise {
   dose: string;
   type: ExerciseType;
   notes?: string;
+}
+
+export interface CustomRoutine {
+  id: string;
+  name: string;
+  createdAt: string;
+  exercises: SessionExercise[];
 }
 
 export interface DailySession {

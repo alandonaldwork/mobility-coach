@@ -6,12 +6,14 @@ import {
   Layers3,
   RotateCcw,
   SlidersHorizontal,
+  Heart,
 } from "lucide-react";
 import { UNIFIED_LIBRARY } from "../../data/exercise-catalog";
 import { Exercise, LibraryTag } from "../../types";
 import { ExerciseDetailModal } from "./ExerciseDetailModal";
+import { useUserStore } from "../../store/useUserStore";
 
-type CatalogFilter = "combined" | LibraryTag;
+type CatalogFilter = "combined" | LibraryTag | "favorites";
 
 export const ExerciseLibrary: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,10 +23,13 @@ export const ExerciseLibrary: React.FC = () => {
   const [selectedType, setSelectedType] = useState<string>("all");
   const [activeExercise, setActiveExercise] = useState<Exercise | null>(null);
 
+  const { favoriteExerciseIds, actions } = useUserStore();
+
   const catalogs: { id: CatalogFilter; label: string }[] = [
-    { id: "combined", label: "Combined" },
+    { id: "combined", label: "All" },
     { id: "stretch", label: "Stretches" },
     { id: "mobility", label: "Mobility" },
+    { id: "favorites", label: `❤ Saved (${favoriteExerciseIds.length})` },
   ];
   const regions = [
     "all",
@@ -51,6 +56,8 @@ export const ExerciseLibrary: React.FC = () => {
   const catalogExercises =
     selectedCatalog === "combined"
       ? UNIFIED_LIBRARY
+      : selectedCatalog === "favorites"
+      ? UNIFIED_LIBRARY.filter((ex) => favoriteExerciseIds.includes(ex.id))
       : UNIFIED_LIBRARY.filter((ex) => ex.libraryTag === selectedCatalog);
 
   const filteredExercises = catalogExercises.filter((ex) => {
@@ -121,14 +128,16 @@ export const ExerciseLibrary: React.FC = () => {
             />
           </div>
 
-          <div className="grid grid-cols-3 rounded-2xl p-1 bg-surface-elevated border border-surface-border gap-1">
+          <div className="grid grid-cols-4 rounded-2xl p-1 bg-surface-elevated border border-surface-border gap-1">
             {catalogs.map((catalog) => (
               <button
                 key={catalog.id}
                 onClick={() => setSelectedCatalog(catalog.id)}
                 className={`px-2 py-1.5 rounded-xl text-[10px] sm:text-[11px] font-mono transition-all text-center truncate ${
                   selectedCatalog === catalog.id
-                    ? "bg-volt text-surface-base font-bold shadow-volt-sm"
+                    ? catalog.id === 'favorites'
+                      ? 'bg-ember text-white font-bold shadow-sm'
+                      : "bg-volt text-surface-base font-bold shadow-volt-sm"
                     : "text-content-secondary hover:text-content-primary hover:bg-surface-card"
                 }`}
               >
@@ -216,7 +225,9 @@ export const ExerciseLibrary: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {filteredExercises.map((ex) => (
+        {filteredExercises.map((ex) => {
+          const isFav = favoriteExerciseIds.includes(ex.id);
+          return (
           <div
             key={`${ex.libraryTag}-${ex.id}`}
             onClick={() => setActiveExercise(ex)}
@@ -227,6 +238,18 @@ export const ExerciseLibrary: React.FC = () => {
                 #{ex.id} · {ex.region}
               </span>
               <div className="flex items-center gap-1.5 shrink-0">
+                {/* Favorite Button */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); actions.toggleFavorite(ex.id); }}
+                  title={isFav ? 'Remove from favorites' : 'Save to favorites'}
+                  className={`w-6 h-6 flex items-center justify-center rounded-lg transition-all ${
+                    isFav
+                      ? 'text-ember'
+                      : 'text-content-muted hover:text-ember'
+                  }`}
+                >
+                  <Heart className={`w-4 h-4 ${isFav ? 'fill-ember' : ''}`} />
+                </button>
                 <span
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
                     ex.libraryTag === "stretch"
@@ -261,7 +284,8 @@ export const ExerciseLibrary: React.FC = () => {
               <ChevronRight className="w-4 h-4 text-content-muted group-hover:text-volt transition-colors" />
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {activeExercise && (

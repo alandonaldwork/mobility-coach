@@ -1,7 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserProgressState, TrainingContext, AssessmentRecord, EquipmentPreferences, ProgramGoal } from '../types';
+import { UserProgressState, TrainingContext, AssessmentRecord, EquipmentPreferences, ProgramGoal, CustomRoutine } from '../types';
 import { monthGoalKey } from '../data/schedules';
+
+export interface AudioPreferences {
+  audioEnabled: boolean;
+  voiceEnabled: boolean;
+  speechRate: number;
+  speechVolume: number;
+  selectedVoiceName: string | null;
+}
 
 interface UserStoreActions {
   setTrainingContext: (context: TrainingContext) => void;
@@ -18,18 +26,33 @@ interface UserStoreActions {
   addBonusMinutes: (minutes: number) => void;
   addAssessmentRecord: (record: Omit<AssessmentRecord, 'id'>) => void;
   updateEquipmentPreferences: (prefs: Partial<EquipmentPreferences>) => void;
+  updateAudioPreferences: (prefs: Partial<AudioPreferences>) => void;
+  toggleFavorite: (exerciseId: number) => void;
+  saveCustomRoutine: (routine: Omit<CustomRoutine, 'id' | 'createdAt'>) => string;
+  deleteCustomRoutine: (id: string) => void;
   resetAllProgress: () => void;
 }
 
 export interface UserStore extends UserProgressState {
   equipmentPreferences: EquipmentPreferences;
+  audioPreferences: AudioPreferences;
   monthlyGoals: Record<string, ProgramGoal>;
+  favoriteExerciseIds: number[];
+  customRoutines: CustomRoutine[];
   actions: UserStoreActions;
 }
 
 const getTodayISO = (): string => {
   const d = new Date();
   return d.toISOString().split('T')[0];
+};
+
+const defaultAudioPreferences: AudioPreferences = {
+  audioEnabled: true,
+  voiceEnabled: true,
+  speechRate: 1,
+  speechVolume: 1,
+  selectedVoiceName: null,
 };
 
 export const useUserStore = create<UserStore>()(
@@ -49,6 +72,9 @@ export const useUserStore = create<UserStore>()(
         hasWall: true,
         hasMat: true,
       },
+      audioPreferences: defaultAudioPreferences,
+      favoriteExerciseIds: [],
+      customRoutines: [],
       actions: {
         setTrainingContext: (context) => set({ trainingContext: context }),
 
@@ -175,6 +201,46 @@ export const useUserStore = create<UserStore>()(
           }));
         },
 
+        updateAudioPreferences: (prefs) => {
+          set((state) => ({
+            audioPreferences: {
+              ...state.audioPreferences,
+              ...prefs,
+            },
+          }));
+        },
+
+        toggleFavorite: (exerciseId) => {
+          set((state) => {
+            const ids = state.favoriteExerciseIds;
+            const isFav = ids.includes(exerciseId);
+            return {
+              favoriteExerciseIds: isFav
+                ? ids.filter((id) => id !== exerciseId)
+                : [...ids, exerciseId],
+            };
+          });
+        },
+
+        saveCustomRoutine: (routine) => {
+          const id = `routine_${Date.now()}`;
+          const newRoutine: CustomRoutine = {
+            id,
+            createdAt: new Date().toISOString(),
+            ...routine,
+          };
+          set((state) => ({
+            customRoutines: [newRoutine, ...state.customRoutines],
+          }));
+          return id;
+        },
+
+        deleteCustomRoutine: (id) => {
+          set((state) => ({
+            customRoutines: state.customRoutines.filter((r) => r.id !== id),
+          }));
+        },
+
         resetAllProgress: () => {
           set({
             currentStreak: 0,
@@ -199,6 +265,9 @@ export const useUserStore = create<UserStore>()(
         trainingContext: state.trainingContext,
         equipmentPreferences: state.equipmentPreferences,
         monthlyGoals: state.monthlyGoals,
+        audioPreferences: state.audioPreferences,
+        favoriteExerciseIds: state.favoriteExerciseIds,
+        customRoutines: state.customRoutines,
       }),
     }
   )

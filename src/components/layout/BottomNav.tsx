@@ -6,6 +6,7 @@ import {
   BookOpen,
   BarChart3,
   Crosshair,
+  ListPlus,
 } from "lucide-react";
 
 export const BottomNav: React.FC = () => {
@@ -13,7 +14,7 @@ export const BottomNav: React.FC = () => {
     { to: "/", label: "Home", icon: Home },
     { to: "/calendar", label: "Calendar", icon: Calendar },
     { to: "/library", label: "Library", icon: BookOpen },
-    { to: "/progress", label: "Stats", icon: BarChart3 },
+    { to: "/routines", label: "Routines", icon: ListPlus },
     { to: "/relief", label: "Body Map", icon: Crosshair },
   ];
 

@@ -12,6 +12,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { SessionPage } from './pages/SessionPage';
 import { ReliefPage } from './pages/ReliefPage';
 import { LoginPage } from './pages/LoginPage';
+import { CustomRoutineBuilderPage } from './pages/CustomRoutineBuilderPage';
 
 const AnimatedRoutes: React.FC = () => {
   const location = useLocation();
@@ -39,6 +40,7 @@ const AnimatedRoutes: React.FC = () => {
           <Route path="/progression" element={<ProgressionPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/session" element={<SessionPage />} />
+          <Route path="/routines" element={<CustomRoutineBuilderPage />} />
         </Routes>
       </motion.div>
     </AnimatePresence>

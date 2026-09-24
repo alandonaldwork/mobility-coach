@@ -3,6 +3,7 @@ import { Play, Pause, RotateCcw, CheckCircle2, ChevronRight, ChevronLeft, SkipFo
 import { useWorkoutStore } from '../../store/useWorkoutStore';
 import { formatSecondsToMMSS } from '../../utils/formatUtils';
 import { Exercise } from '../../types';
+import { useAudioCues } from '../../hooks/useAudioCues';
 
 interface ExerciseTimerProps {
   exercise: Exercise;
@@ -22,6 +23,9 @@ export const ExerciseTimer: React.FC<ExerciseTimerProps> = ({ exercise, dose }) 
     restartCurrentExercise,
     markCurrentExerciseComplete,
   } = useWorkoutStore();
+
+  // 🔊 Wire all audio cues
+  useAudioCues();
 
   useEffect(() => {
     const timer = setInterval(() => {

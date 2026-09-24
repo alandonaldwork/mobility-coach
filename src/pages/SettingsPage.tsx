@@ -1,9 +1,10 @@
 import React from 'react';
-import { Settings, Dumbbell, Trash2, CheckCircle2, Activity, ArrowRight, ClipboardCheck, Sun, Moon } from 'lucide-react';
+import { Settings, Dumbbell, Trash2, CheckCircle2, Activity, ArrowRight, ClipboardCheck, Sun, Moon, Volume2, VolumeX, Mic, MicOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store/useUserStore';
 import { useTheme } from '../hooks/useTheme';
 import { ProgramGoal } from '../types';
+import { speechService } from '../audio/speech';
 
 const goalOptions: { id: ProgramGoal; label: string; description: string }[] = [
   { id: 'combined', label: 'Combined', description: 'A balanced mix of stretches and active mobility.' },
@@ -14,10 +15,21 @@ const goalOptions: { id: ProgramGoal; label: string; description: string }[] = [
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
-  const { equipmentPreferences, assessmentRecords, actions } = useUserStore();
+  const { equipmentPreferences, assessmentRecords, audioPreferences, actions } = useUserStore();
   const [showResetConfirm, setShowResetConfirm] = React.useState(false);
+  const [availableVoices, setAvailableVoices] = React.useState<SpeechSynthesisVoice[]>([]);
   const today = new Date();
   const currentGoal = actions.getGoalForMonth(today.getFullYear(), today.getMonth());
+
+  React.useEffect(() => {
+    const loadVoices = () => {
+      const voices = speechService.getVoices().filter(v => v.lang.startsWith('en'));
+      setAvailableVoices(voices);
+    };
+    loadVoices();
+    window.speechSynthesis?.addEventListener('voiceschanged', loadVoices);
+    return () => window.speechSynthesis?.removeEventListener('voiceschanged', loadVoices);
+  }, []);
 
   const toggleEquipment = (key: keyof typeof equipmentPreferences) => {
     actions.updateEquipmentPreferences({ [key]: !equipmentPreferences[key] });
@@ -99,6 +111,99 @@ export const SettingsPage: React.FC = () => {
             </div>
           </button>
         </div>
+      </div>
+
+      {/* Audio & Voice Section */}
+      <div className="bg-surface-card border border-surface-border rounded-2xl p-5 space-y-4 shadow-elevated">
+        <div className="space-y-0.5">
+          <h3 className="text-xs font-mono font-bold text-volt uppercase">Audio & Voice</h3>
+          <p className="text-xs text-content-muted">Control spoken announcements and audio chimes during sessions.</p>
+        </div>
+
+        {/* Toggles row */}
+        <div className="grid grid-cols-2 gap-3">
+          {/* Audio Chimes toggle */}
+          <div
+            onClick={() => actions.updateAudioPreferences({ audioEnabled: !audioPreferences.audioEnabled })}
+            className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+              audioPreferences.audioEnabled
+                ? 'bg-surface-elevated border-volt/30 text-content-primary'
+                : 'bg-surface-base border-surface-border text-content-muted'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {audioPreferences.audioEnabled
+                ? <Volume2 className="w-4 h-4 text-volt" />
+                : <VolumeX className="w-4 h-4" />}
+              <span className="text-xs font-bold">Chimes</span>
+            </div>
+            <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
+              audioPreferences.audioEnabled ? 'bg-volt border-volt text-surface-base' : 'border-surface-border'
+            }`}>
+              {audioPreferences.audioEnabled && <CheckCircle2 className="w-4 h-4" />}
+            </div>
+          </div>
+
+          {/* Voice toggle */}
+          <div
+            onClick={() => actions.updateAudioPreferences({ voiceEnabled: !audioPreferences.voiceEnabled })}
+            className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+              audioPreferences.voiceEnabled
+                ? 'bg-surface-elevated border-volt/30 text-content-primary'
+                : 'bg-surface-base border-surface-border text-content-muted'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {audioPreferences.voiceEnabled
+                ? <Mic className="w-4 h-4 text-volt" />
+                : <MicOff className="w-4 h-4" />}
+              <span className="text-xs font-bold">Voice</span>
+            </div>
+            <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
+              audioPreferences.voiceEnabled ? 'bg-volt border-volt text-surface-base' : 'border-surface-border'
+            }`}>
+              {audioPreferences.voiceEnabled && <CheckCircle2 className="w-4 h-4" />}
+            </div>
+          </div>
+        </div>
+
+        {/* Speech Rate Slider */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-content-primary">Speech Rate</span>
+            <span className="text-xs font-mono text-volt">{audioPreferences.speechRate.toFixed(1)}×</span>
+          </div>
+          <input
+            type="range"
+            min="0.5"
+            max="1.5"
+            step="0.1"
+            value={audioPreferences.speechRate}
+            onChange={(e) => actions.updateAudioPreferences({ speechRate: parseFloat(e.target.value) })}
+            className="w-full accent-volt"
+          />
+          <div className="flex justify-between text-[10px] font-mono text-content-muted">
+            <span>0.5× Slow</span>
+            <span>1.5× Fast</span>
+          </div>
+        </div>
+
+        {/* Voice Selector */}
+        {availableVoices.length > 0 && (
+          <div className="space-y-1.5">
+            <span className="text-xs font-bold text-content-primary block">Voice</span>
+            <select
+              value={audioPreferences.selectedVoiceName ?? ''}
+              onChange={(e) => actions.updateAudioPreferences({ selectedVoiceName: e.target.value || null })}
+              className="w-full bg-surface-elevated border border-surface-border rounded-xl px-3 py-2 text-xs text-content-primary focus:outline-none focus:border-volt"
+            >
+              <option value="">System Default</option>
+              {availableVoices.map((v) => (
+                <option key={v.name} value={v.name}>{v.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {/* Mobility Assessment Navigation Card */}
