@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ListPlus,
   Search,
@@ -35,6 +36,7 @@ function makeTrayItem(ex: Exercise): SessionExercise {
 }
 
 export const CustomRoutineBuilderPage: React.FC = () => {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<BuilderTab>('build');
   const [search, setSearch] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('all');
@@ -99,17 +101,25 @@ export const CustomRoutineBuilderPage: React.FC = () => {
   const totalMinutes = Math.round(totalSeconds / 60);
 
   // ── Start session helper ────────────────────────────────────────
-  const startNow = (exercises: SessionExercise[]) => {
+  const startNow = (exercises: SessionExercise[], name?: string) => {
+    if (!exercises || exercises.length === 0) return;
+    const finalName = name?.trim() || routineName.trim() || 'Custom Routine';
+    const totalDurationMins = Math.max(
+      1,
+      Math.ceil(exercises.reduce((s, e) => s + (e.durationSeconds || 30), 0) / 60)
+    );
+
     startCustomReliefSession({
       dayId: 7,
-      name: routineName || 'Custom Routine',
-      focus: 'Custom',
-      emphasis: 'User-built',
-      plannedDurationMinutes: Math.ceil(exercises.reduce((s, e) => s + e.durationSeconds, 0) / 60),
+      name: finalName,
+      focus: 'Custom Routine',
+      emphasis: 'User-built Mobility Flow',
+      plannedDurationMinutes: totalDurationMins,
       deskResetMinutes: 0,
-      mainSessionMinutes: Math.ceil(exercises.reduce((s, e) => s + e.durationSeconds, 0) / 60),
+      mainSessionMinutes: totalDurationMins,
       exercises,
     });
+    navigate('/session');
   };
 
   const saveRoutine = () => {
@@ -387,7 +397,7 @@ export const CustomRoutineBuilderPage: React.FC = () => {
                   Save Routine
                 </button>
                 <button
-                  onClick={() => startNow(tray)}
+                  onClick={() => startNow(tray, routineName)}
                   className="flex-1 py-3.5 bg-volt text-surface-base font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-volt hover:bg-volt/90 transition-all flex items-center justify-center gap-2"
                 >
                   <Play className="w-4 h-4 fill-surface-base" />
@@ -439,12 +449,26 @@ export const CustomRoutineBuilderPage: React.FC = () => {
                         <span className="flex items-center gap-1"><Clock className="w-3 h-3 text-volt" />~{totalMin} min</span>
                       </div>
                     </div>
-                    <button
-                      onClick={() => { if (window.confirm('Delete this routine?')) actions.deleteCustomRoutine(routine.id); }}
-                      className="w-8 h-8 flex items-center justify-center rounded-xl text-content-muted hover:text-ember hover:bg-ember/10 transition-all border border-surface-border"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => {
+                          setTray(routine.exercises);
+                          setRoutineName(routine.name);
+                          setTab('edit');
+                        }}
+                        title="Edit in builder"
+                        className="h-8 px-2.5 flex items-center justify-center rounded-xl text-content-muted hover:text-volt hover:bg-volt/10 transition-all border border-surface-border text-[10px] font-mono font-bold"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => { if (window.confirm('Delete this routine?')) actions.deleteCustomRoutine(routine.id); }}
+                        className="w-8 h-8 flex items-center justify-center rounded-xl text-content-muted hover:text-ember hover:bg-ember/10 transition-all border border-surface-border"
+                        title="Delete routine"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* Exercise chips */}
@@ -468,7 +492,7 @@ export const CustomRoutineBuilderPage: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={() => startNow(routine.exercises)}
+                    onClick={() => startNow(routine.exercises, routine.name)}
                     className="w-full py-3 bg-volt text-surface-base font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-volt hover:bg-volt/90 transition-all flex items-center justify-center gap-2"
                   >
                     <Play className="w-4 h-4 fill-surface-base" />

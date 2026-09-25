@@ -35,7 +35,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { to: "/library", label: "Library", icon: BookOpen },
     { to: "/routines", label: "Routines", icon: ListPlus },
     { to: "/progress", label: "Stats", icon: BarChart3 },
-    { to: "/assessments", label: "Assessments", icon: ClipboardCheck },
+    // { to: "/assessments", label: "Assessments", icon: ClipboardCheck },
     { to: "/progression", label: "Plan", icon: Zap },
     { to: "/settings", label: "Settings", icon: Settings },
   ];
